@@ -13,7 +13,6 @@
 	"prefer-stable": true,
 	"minimum-stability": "dev",
 	"require": {
-		"aimeos/aimeos-extinstaller": "dev-master",
 		"predis/predis": "0.8.*"
 	},
 	"autoload": {
