@@ -11,6 +11,8 @@ php:
 before_script:
   - git clone --depth=50 --branch=master git://github.com/aimeos/arcavias-core.git ../arcavias-core
   - cd ../arcavias-core && mv ../ai-cache ext/
-  - composer require "predis/predis" "0.8.*"
+  - composer update
+  - mysql -e 'create database aimeos;'
+  - echo "<?php return array( 'db' => array( 'adapter' => 'mysql', 'host' => '127.0.0.1', 'database' => 'aimeos', 'username' => 'root', 'password' => '', 'limit' => 2, 'opt-persistent' => false, 'stmt' => array( \"SET NAMES 'utf8'\", \"SET SESSION sql_mode='ANSI'\" ) ) );" > config/resource.php
 
-script: vendor/bin/phing -Ddir=ext/ai-cache testext && vendor/bin/phing -Ddir=ext/ai-container checkext
+script: vendor/bin/phing -Ddir=ext/ai-cache setup testext checkext
