@@ -28,8 +28,8 @@ php -r "readfile('https://getcomposer.org/installer');" | php -- --filename=comp
 Add the cache extension name to the "require" section of your ```composer.json``` (or your ```aimeos.composer.json```, depending on what is available) file:
 ```
 "require": [
+    "aimeos/ai-cache": "dev-master",
     ...
-    "aimeos/ai-cache": "dev-master"
 ],
 ```
 
@@ -40,7 +40,7 @@ composer update
 
 If your composer file is named "aimeos.composer.json", you must use this:
 ```
-COMPOSER=aimeos.composer.json composer update
+COMPOSER=composer.aimeos.json composer update
 ```
 
 These commands will install the Aimeos extension into the extension directory and it will be available immediately.
