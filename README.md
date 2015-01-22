@@ -75,6 +75,10 @@ After you've set up a Redis server, you need to tell your Aimeos shop installati
 
 **Symfony**:
 ```
+aimeos_shop:
+    resource:
+        cache:
+            redis:
                 scheme: tcp
                 host: 10.0.0.1
                 port: 6379
@@ -82,9 +86,13 @@ After you've set up a Redis server, you need to tell your Aimeos shop installati
 
 **TYPO3**:
 ```
+plugin.tx_aimeos.settings.resource.cache {
+    redis: {
         scheme = tcp
         host = 10.0.0.1
         port = 6379
+    }
+}
 ```
 
 Please have a look at the fine [Predis readme](https://github.com/nrk/predis) for all available options.
