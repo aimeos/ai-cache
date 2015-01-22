@@ -27,7 +27,7 @@ class MW_Cache_RedisTest extends MW_Unittest_Testcase
 			'sadd', 'set', 'smembers'
 		);
 
-		$this->_mock = $this->getMock( 'Predis\Client', $methods );
+		$this->_mock = $this->getMockBuilder( 'Predis\\Client' )->setMethods( $methods )->getMock();
 		$this->_object = new MW_Cache_Redis( array( 'siteid' => 1 ), $this->_mock );
 	}
 

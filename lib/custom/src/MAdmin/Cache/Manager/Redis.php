@@ -46,6 +46,10 @@ class MAdmin_Cache_Manager_Redis
 			$conn = $config->get( 'resource/cache/redis/connection' );
 			$conf = $config->get( 'resource/cache/redis', array() );
 
+			if( !class_exists( 'Predis\\Client' ) ) {
+				throw new MAdmin_Cache_Exception( sprintf( 'Please install "%1$s" via composer first', 'predis/predis' ) );
+			}
+
 			$client = new Predis\Client( $conn, $conf );
 			$conf = array( 'siteid' => $context->getLocale()->getSiteId() );
 

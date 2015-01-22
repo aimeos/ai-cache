@@ -74,12 +74,99 @@ class MAdmin_Cache_Manager_RedisTest extends MW_Unittest_Testcase
 
 	public function testGetItem()
 	{
-		$this->markTestIncomplete();
+		$context = TestHelper::getContext();
+
+		$mockRedis = $this->getMockBuilder( 'MW_Cache_Redis' )
+			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
+
+		$mockRedis->expects( $this->once() )->method( 'get' )->will( $this->returnValue( 'test value' ) );
+
+		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
+
+		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
+
+		$this->assertInstanceOf( 'MAdmin_Cache_Item_Interface', $mock->getItem( 'test' ) );
 	}
 
 
-	public function testSaveUpdateDeleteItem()
+	public function testGetItemException()
 	{
-		$this->markTestIncomplete();
+		$context = TestHelper::getContext();
+
+		$mockRedis = $this->getMockBuilder( 'MW_Cache_Redis' )
+			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
+
+		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
+
+		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
+
+		$this->setExpectedException( 'MAdmin_Cache_Exception' );
+		$mock->getItem( 'test' );
+	}
+
+
+	public function testSaveItem()
+	{
+		$context = TestHelper::getContext();
+
+		$mockRedis = $this->getMockBuilder( 'MW_Cache_Redis' )
+			->disableOriginalConstructor()->setMethods( array( 'delete', 'set' ) )->getMock();
+
+		$mockRedis->expects( $this->once() )->method( 'delete' );
+		$mockRedis->expects( $this->once() )->method( 'set' );
+
+		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
+
+		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
+
+		$item = $mock->createItem();
+		$item->setId( 'test' );
+
+		$mock->saveItem( $item );
+	}
+
+
+	public function testSaveItemNotModified()
+	{
+		$context = TestHelper::getContext();
+
+		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
+
+		$mock->saveItem( $mock->createItem() );
+	}
+
+
+	public function testSaveItemInvalid()
+	{
+		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();
+
+		$this->setExpectedException( 'MAdmin_Cache_Exception' );
+		$mock->saveItem( new MAdmin_Log_Item_Default() );
+	}
+
+
+	public function testDeleteItems()
+	{
+		$mockRedis = $this->getMockBuilder( 'MW_Cache_Redis' )
+			->disableOriginalConstructor()->setMethods( array( 'deleteList' ) )->getMock();
+
+		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();
+
+		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
+
+		$mock->deleteItems( array() );
+	}
+
+
+	public function testGetCache()
+	{
+		$this->setExpectedException( 'MAdmin_Cache_Exception' );
+		$this->_object->getCache();
 	}
 }

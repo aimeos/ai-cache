@@ -13,7 +13,7 @@ class MW_Cache_RedisServerTest extends MW_Unittest_Testcase
 {
 	public function testRun()
 	{
-		if( !class_exists( 'Predis\Client' ) ) {
+		if( !class_exists( 'Predis\\Client' ) ) {
 			$this->markTestSkipped( 'Predis library not available' );
 		}
 
