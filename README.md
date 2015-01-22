@@ -25,7 +25,7 @@ As every Aimeos extension, the easiest way is to install it via [composer](https
 php -r "readfile('https://getcomposer.org/installer');" | php -- --filename=composer
 ```
 
-Add the cache extension name to the "require" section of your ```composer.json``` (or your ```aimeos.composer.json```, depending on what is available) file:
+Add the cache extension name to the "require" section of your ```composer.json``` (or your ```composer.aimeos.json```, depending on what is available) file:
 ```
 "require": [
     "aimeos/ai-cache": "dev-master",
