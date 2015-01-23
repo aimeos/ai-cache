@@ -7,10 +7,11 @@ Aimeos cache extension
 [![Build Status](https://travis-ci.org/aimeos/ai-cache.svg?branch=master)](https://travis-ci.org/aimeos/ai-cache)
 [![Coverage Status](https://coveralls.io/repos/aimeos/ai-cache/badge.svg?branch=master)](https://coveralls.io/r/aimeos/ai-cache?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/aimeos/ai-cache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/aimeos/ai-cache/?branch=master)
+[![HHVM Status](http://hhvm.h4cc.de/badge/aimeos/ai-cache.svg)](http://hhvm.h4cc.de/package/aimeos/ai-cache)
 
 The Aimeos cache extension contains alternative cache implementations to the database caching of the core. They can be used by Aimeos web shops to offload generated HTML web site parts to other services like specialized key/value stores.
 
-# Table of contents
+## Table of contents
 
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -18,7 +19,7 @@ The Aimeos cache extension contains alternative cache implementations to the dat
 - [License](#license)
 - [Links](#links)
 
-# Installation
+## Installation
 
 As every Aimeos extension, the easiest way is to install it via [composer](https://getcomposer.org/). If you don't have composer installed yet, you can execute this string on the command line to download it:
 ```
@@ -45,7 +46,7 @@ COMPOSER=composer.aimeos.json composer update
 
 These commands will install the Aimeos extension into the extension directory and it will be available immediately.
 
-# Configuration
+## Configuration
 
 The ways of adding the required resource configuration depends on the software you are using because all have their own means to do that. Here are some examples:
 
@@ -67,7 +68,7 @@ plugin.tx_aimeos.settings.resource.cache {
 }
 ```
 
-## Redis
+### Redis
 
 [Redis](http://www.redis.io/) is an in-memory caching server known for its speed and advanced features. It supports not only plain key/value pairs but also lists for values used by Aimeos for tagging cached entries. This allows a fine control of removing outdated HTML parts.
 
@@ -97,11 +98,11 @@ plugin.tx_aimeos.settings.resource.cache {
 
 Please have a look at the fine [Predis readme](https://github.com/nrk/predis) for all available options.
 
-# License
+## License
 
 The Aimeos cache extension is licensed under the terms of the LGPLv3 Open Source license and is available for free.
 
-# Links
+## Links
 
 * [Web site](http://aimeos.org/)
 * [Documentation](http://docs.aimeos.org/)
