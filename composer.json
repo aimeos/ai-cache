@@ -1,14 +1,14 @@
 {
 	"name": "aimeos/ai-cache",
 	"description": "Aimeos cache extensions",
-	"homepage": "http://aimeos.org",
+	"homepage": "https://aimeos.org",
 	"type": "aimeos-extension",
 	"license": "LGPL-3.0",
 	"support": {
 		"source": "https://github.com/aimeos/ai-cache",
 		"issues": "https://github.com/aimeos/ai-cache/issues",
-		"forum": "http://help.aimeos.org",
-		"wiki": "http://docs.aimeos.org"
+		"forum": "https://aimeos.org/help",
+		"wiki": "https://aimeos.org/docs"
 	},
 	"repositories": [
 		{
