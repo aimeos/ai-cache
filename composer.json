@@ -1,6 +1,7 @@
 {
 	"name": "aimeos/ai-cache",
-	"description": "Aimeos cache extensions",
+	"description": "Cache extension for Aimeos web shops and e-commerce solutions",
+	"keywords": ["aimeos", "cache", "extension", "shop", "e-commerce"],
 	"homepage": "https://aimeos.org",
 	"type": "aimeos-extension",
 	"license": "LGPL-3.0",
