@@ -34,7 +34,7 @@
 	</target>
 
 	<target name="i18n" description="Creates translation message files">
-		<exec command="find ./src/ -type f | xgettext -s --no-wrap --add-comments=/ --language=PHP --from-code=UTF-8 --keyword=sprintf:1 --keyword=dt:2,2t --keyword=dn:2,3,4t -o i18n/cache-custom.pot -f -"
+		<exec command="find ./src/ -type f | xgettext -s --no-wrap --add-comments=/ --language=PHP --from-code=UTF-8 --keyword=sprintf:1 --keyword=dt:2,2t --keyword=dn:2,3,4t -o i18n/ai-cache-custom.pot -f -"
 			checkreturn="true" logoutput="true" /> 
         <foreach param="po-fname" absparam="po-filename" target="i18n-update">
             <fileset dir="./i18n">
@@ -45,7 +45,7 @@
 
 	<target name="i18n-update" description="Updates translation message files">
 		<fail unless="po-filename" message="Missing file name" />
-		<exec command="msgmerge -s --no-wrap -U --backup=none ${po-filename} i18n/cache-custom.pot" checkreturn="true" logoutput="true" /> 
+		<exec command="msgmerge -s --no-wrap -U --backup=none ${po-filename} i18n/ai-cache-custom.pot" checkreturn="true" logoutput="true" /> 
 		<exec command="msgattrib -s --no-wrap --clear-obsolete -o ${po-filename} ${po-filename}" checkreturn="true" logoutput="true" /> 
     </target>
 
