@@ -20,7 +20,7 @@
 	"prefer-stable": true,
 	"minimum-stability": "dev",
 	"require": {
-		"predis/predis": "0.8.*"
+		"predis/predis": "~1.0"
 	},
 	"require-dev": {
 		"satooshi/php-coveralls": "dev-master"
