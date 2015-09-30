@@ -166,7 +166,6 @@ class MAdmin_Cache_Manager_RedisTest extends MW_Unittest_Testcase
 
 	public function testGetCache()
 	{
-		$this->setExpectedException( 'MAdmin_Cache_Exception' );
-		$this->_object->getCache();
+		$this->assertInstanceOf( 'MW_Cache_Interface', $this->_object->getCache() );
 	}
 }

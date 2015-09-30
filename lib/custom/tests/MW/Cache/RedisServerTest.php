@@ -17,9 +17,17 @@ class MW_Cache_RedisServerTest extends MW_Unittest_Testcase
 			$this->markTestSkipped( 'Predis library not available' );
 		}
 
-		$predis = new Predis\Client();
-		$client = new MW_Cache_Redis( array( 'siteid' => 1 ), $predis );
-		$client->flush();
+		try
+		{
+			$predis = new Predis\Client();
+
+			$client = new MW_Cache_Redis( array( 'siteid' => 1 ), $predis );
+			$client->flush();
+		}
+		catch( Exception $e )
+		{
+			$this->markTestSkipped( 'Predis server not available' );
+		}
 
 
 		$client->set( 'arc-single-key', 'single-value' );
