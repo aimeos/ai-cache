@@ -1,0 +1,11 @@
+[main]
+host = https://www.transifex.com
+minimum-perc = 1
+minimum_perc = 1
+
+[ai-cache.lib-custom]
+file_filter = lib/custom/i18n/<lang>.po
+source_file = lib/custom/i18n/ai-cache-custom.pot
+source_lang = en
+type = PO
+
