@@ -19,8 +19,8 @@ class MAdmin_Cache_Manager_Redis
 	extends MAdmin_Common_Manager_Abstract
 	implements MAdmin_Cache_Manager_Interface
 {
-	private $_object;
-	private $_searchConfig = array(
+	private $object;
+	private $searchConfig = array(
 		'cache.id' => array(
 			'code' => 'cache.id',
 			'internalcode' => '"id"',
@@ -38,9 +38,9 @@ class MAdmin_Cache_Manager_Redis
 	 */
 	public function getCache()
 	{
-		if( !isset( $this->_object ) )
+		if( !isset( $this->object ) )
 		{
-			$context = $this->_getContext();
+			$context = $this->getContext();
 			$config = $context->getConfig();
 
 			$conn = $config->get( 'resource/cache/redis/connection' );
@@ -53,10 +53,10 @@ class MAdmin_Cache_Manager_Redis
 			$client = new Predis\Client( $conn, $conf );
 			$conf = array( 'siteid' => $context->getLocale()->getSiteId() );
 
-			$this->_object = MW_Cache_Factory::createManager( 'Redis', $conf, $client );
+			$this->object = MW_Cache_Factory::createManager( 'Redis', $conf, $client );
 		}
 
-		return $this->_object;
+		return $this->object;
 	}
 
 
@@ -67,7 +67,7 @@ class MAdmin_Cache_Manager_Redis
 	 */
 	public function createItem()
 	{
-		return $this->_createItem();
+		return $this->createItemBase();
 	}
 
 
@@ -121,7 +121,7 @@ class MAdmin_Cache_Manager_Redis
 			throw new MAdmin_Cache_Exception( sprintf( 'Item with ID "%1$s" not found', $id ) );
 		}
 
-		return $this->_createItem( array( 'id' => $id, 'value' => $value ) );
+		return $this->createItemBase( array( 'id' => $id, 'value' => $value ) );
 	}
 
 
@@ -150,7 +150,7 @@ class MAdmin_Cache_Manager_Redis
 	{
 		$path = 'classes/cache/manager/submanagers';
 
-		return $this->_getSearchAttributes( $this->_searchConfig, $path, array(), $withsub );
+		return $this->getSearchAttributesBase( $this->searchConfig, $path, array(), $withsub );
 	}
 
 
@@ -163,7 +163,7 @@ class MAdmin_Cache_Manager_Redis
 	 */
 	public function getSubManager( $manager, $name = null )
 	{
-		return $this->_getSubManager( 'cache', $manager, $name );
+		return $this->getSubManagerBase( 'cache', $manager, $name );
 	}
 
 
@@ -173,9 +173,9 @@ class MAdmin_Cache_Manager_Redis
 	 * @param array $values Associative list of key/value pairs of a job
 	 * @return MAdmin_Cache_Item_Interface
 	 */
-	protected function _createItem( array $values = array() )
+	protected function createItemBase( array $values = array() )
 	{
-		$values['siteid'] = $this->_getContext()->getLocale()->getSiteId();
+		$values['siteid'] = $this->getContext()->getLocale()->getSiteId();
 
 		return new MAdmin_Cache_Item_Default( $values );
 	}

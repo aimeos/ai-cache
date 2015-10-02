@@ -8,7 +8,7 @@
 
 class MAdmin_Cache_Manager_RedisTest extends MW_Unittest_Testcase
 {
-	private $_object;
+	private $object;
 
 
 	/**
@@ -19,8 +19,8 @@ class MAdmin_Cache_Manager_RedisTest extends MW_Unittest_Testcase
 	 */
 	protected function setUp()
 	{
-		$this->_context = TestHelper::getContext();
-		$this->_object = new MAdmin_Cache_Manager_Redis( $this->_context );
+		$this->context = TestHelper::getContext();
+		$this->object = new MAdmin_Cache_Manager_Redis( $this->context );
 	}
 
 
@@ -32,25 +32,25 @@ class MAdmin_Cache_Manager_RedisTest extends MW_Unittest_Testcase
 	 */
 	protected function tearDown()
 	{
-		$this->_object = null;
+		$this->object = null;
 	}
 
 
 	public function testCleanup()
 	{
-		$this->_object->cleanup( array( -1 ) );
+		$this->object->cleanup( array( -1 ) );
 	}
 
 
 	public function testCreateItem()
 	{
-		$this->assertInstanceOf( 'MAdmin_Cache_Item_Interface', $this->_object->createItem() );
+		$this->assertInstanceOf( 'MAdmin_Cache_Item_Interface', $this->object->createItem() );
 	}
 
 
 	public function testGetSearchAttributes()
 	{
-		foreach( $this->_object->getSearchAttributes() as $attr ) {
+		foreach( $this->object->getSearchAttributes() as $attr ) {
 			$this->assertInstanceOf('MW_Common_Criteria_Attribute_Interface', $attr );
 		}
 	}
@@ -59,16 +59,16 @@ class MAdmin_Cache_Manager_RedisTest extends MW_Unittest_Testcase
 	public function testGetSubManager()
 	{
 		$this->setExpectedException('MAdmin_Exception');
-		$this->_object->getSubManager( 'unknown' );
+		$this->object->getSubManager( 'unknown' );
 	}
 
 
 	public function testSearchItems()
 	{
-		$search = $this->_object->createSearch();
+		$search = $this->object->createSearch();
 		$search->setConditions( $search->compare( '==', 'cache.id', 'unittest' ) );
 
-		$this->assertEquals( array(), $this->_object->searchItems( $search ) );
+		$this->assertEquals( array(), $this->object->searchItems( $search ) );
 	}
 
 
@@ -166,6 +166,6 @@ class MAdmin_Cache_Manager_RedisTest extends MW_Unittest_Testcase
 
 	public function testGetCache()
 	{
-		$this->assertInstanceOf( 'MW_Cache_Interface', $this->_object->getCache() );
+		$this->assertInstanceOf( 'MW_Cache_Interface', $this->object->getCache() );
 	}
 }

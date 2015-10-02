@@ -9,8 +9,8 @@
 
 class MW_Cache_RedisTest extends MW_Unittest_Testcase
 {
-	private $_mock;
-	private $_object;
+	private $mock;
+	private $object;
 
 
 	/**
@@ -27,8 +27,8 @@ class MW_Cache_RedisTest extends MW_Unittest_Testcase
 			'sadd', 'set', 'smembers'
 		);
 
-		$this->_mock = $this->getMockBuilder( 'Predis\\Client' )->setMethods( $methods )->getMock();
-		$this->_object = new MW_Cache_Redis( array( 'siteid' => 1 ), $this->_mock );
+		$this->mock = $this->getMockBuilder( 'Predis\\Client' )->setMethods( $methods )->getMock();
+		$this->object = new MW_Cache_Redis( array( 'siteid' => 1 ), $this->mock );
 	}
 
 
@@ -40,101 +40,101 @@ class MW_Cache_RedisTest extends MW_Unittest_Testcase
 	 */
 	protected function tearDown()
 	{
-		unset( $this->_object, $this->_mock );
+		unset( $this->object, $this->mock );
 	}
 
 
 	public function testDelete()
 	{
-		$this->_mock->expects( $this->once() )->method( 'del' )
+		$this->mock->expects( $this->once() )->method( 'del' )
 			->with( $this->equalTo( array( '1-test' ) ) );
 
-		$this->_object->delete( 'test' );
+		$this->object->delete( 'test' );
 	}
 
 
 	public function testDeleteList()
 	{
-		$this->_mock->expects( $this->once() )->method( 'del' )
+		$this->mock->expects( $this->once() )->method( 'del' )
 			->with( $this->equalTo( array( '1-test' ) ) );
 
-		$this->_object->deleteList( array( 'test' ) );
+		$this->object->deleteList( array( 'test' ) );
 	}
 
 
 	public function testDeleteByTags()
 	{
-		$this->_mock->expects( $this->once() )->method( 'pipeline' )
-			->will( $this->returnValue( $this->_mock ) );
+		$this->mock->expects( $this->once() )->method( 'pipeline' )
+			->will( $this->returnValue( $this->mock ) );
 
-		$this->_mock->expects( $this->exactly( 2 ) )->method( 'smembers' );
+		$this->mock->expects( $this->exactly( 2 ) )->method( 'smembers' );
 
-		$this->_mock->expects( $this->once() )->method( 'execute' )
+		$this->mock->expects( $this->once() )->method( 'execute' )
 			->will( $this->returnValue( array( '1-tag:1' => array( '1-key:1', '1-key:2' ) ) ) );
 
-		$this->_mock->expects( $this->once() )->method( 'del' )
+		$this->mock->expects( $this->once() )->method( 'del' )
 			->with( $this->equalTo( array( '1-key:1', '1-key:2', '1-tag:tag1', '1-tag:tag2' ) ) );
 
-		$this->_object->deleteByTags( array( 'tag1', 'tag2' ) );
+		$this->object->deleteByTags( array( 'tag1', 'tag2' ) );
 	}
 
 
 	public function testFlush()
 	{
-		$this->_mock->expects( $this->once() )->method( 'flushdb' );
-		$this->_object->flush();
+		$this->mock->expects( $this->once() )->method( 'flushdb' );
+		$this->object->flush();
 	}
 
 
 	public function testGet()
 	{
-		$this->_mock->expects( $this->once() )->method( 'get' )
+		$this->mock->expects( $this->once() )->method( 'get' )
 			->will( $this->returnValue( 'test' ) );
 
-		$this->assertEquals( 'test', $this->_object->get( 't:1' ) );
+		$this->assertEquals( 'test', $this->object->get( 't:1' ) );
 	}
 
 
 	public function testGetDefault()
 	{
-		$this->_mock->expects( $this->once() )->method( 'get' );
+		$this->mock->expects( $this->once() )->method( 'get' );
 
-		$this->assertFalse( $this->_object->get( 't:1', false ) );
+		$this->assertFalse( $this->object->get( 't:1', false ) );
 	}
 
 
 	public function testGetExpired()
 	{
-		$this->_mock->expects( $this->once() )->method( 'get' );
+		$this->mock->expects( $this->once() )->method( 'get' );
 
-		$this->assertEquals( null, $this->_object->get( 't:1' ) );
+		$this->assertEquals( null, $this->object->get( 't:1' ) );
 	}
 
 
 	public function testGetList()
 	{
-		$this->_mock->expects( $this->once() )->method( 'mget' )
+		$this->mock->expects( $this->once() )->method( 'mget' )
 			->will( $this->returnValue( array( 0 => 'test' ) ) );
 
-		$this->assertEquals( array( 't:1' => 'test' ), $this->_object->getList( array( 't:1' ) ) );
+		$this->assertEquals( array( 't:1' => 'test' ), $this->object->getList( array( 't:1' ) ) );
 	}
 
 
 	public function testGetListByTags()
 	{
-		$this->_mock->expects( $this->once() )->method( 'pipeline' )
-			->will( $this->returnValue( $this->_mock ) );
+		$this->mock->expects( $this->once() )->method( 'pipeline' )
+			->will( $this->returnValue( $this->mock ) );
 
-		$this->_mock->expects( $this->exactly( 2 ) )->method( 'smembers' );
+		$this->mock->expects( $this->exactly( 2 ) )->method( 'smembers' );
 
-		$this->_mock->expects( $this->once() )->method( 'execute' )
+		$this->mock->expects( $this->once() )->method( 'execute' )
 			->will( $this->returnValue( array( '1-tag:1' => array( '1-t:1', '1-t:2' ) ) ) );
 
-		$this->_mock->expects( $this->once() )->method( 'mget' )
+		$this->mock->expects( $this->once() )->method( 'mget' )
 			->will( $this->returnValue( array( 0 => 'test1', 1 => 'test2' ) ) );
 
 		$expected = array( 't:1' => 'test1', 't:2' => 'test2' );
-		$result = $this->_object->getListByTags( array( 'tag1', 'tag2' ) );
+		$result = $this->object->getListByTags( array( 'tag1', 'tag2' ) );
 
 		$this->assertEquals( $expected, $result );
 	}
@@ -142,38 +142,38 @@ class MW_Cache_RedisTest extends MW_Unittest_Testcase
 
 	public function testSet()
 	{
-		$this->_mock->expects( $this->once() )->method( 'pipeline' )
-			->will( $this->returnValue( $this->_mock ) );
+		$this->mock->expects( $this->once() )->method( 'pipeline' )
+			->will( $this->returnValue( $this->mock ) );
 
-		$this->_mock->expects( $this->once() )->method( 'set' )
+		$this->mock->expects( $this->once() )->method( 'set' )
 			->with( $this->equalTo( '1-t:1' ), $this->equalTo( 'test 1' ) );
 
-		$this->_mock->expects( $this->exactly( 2 ) )->method( 'sadd' );
+		$this->mock->expects( $this->exactly( 2 ) )->method( 'sadd' );
 
-		$this->_mock->expects( $this->once() )->method( 'execute' );
+		$this->mock->expects( $this->once() )->method( 'execute' );
 
-		$this->_mock->expects( $this->once() )->method( 'expireat' )
+		$this->mock->expects( $this->once() )->method( 'expireat' )
 			->with( $this->equalTo( '1-t:1' ), $this->greaterThan( 0 ) );
 
-		$this->_object->set( 't:1', 'test 1', array( 'tag1', 'tag2' ), '2000-01-01 00:00:00' );
+		$this->object->set( 't:1', 'test 1', array( 'tag1', 'tag2' ), '2000-01-01 00:00:00' );
 	}
 
 
 	public function testSetList()
 	{
-		$this->_mock->expects( $this->once() )->method( 'pipeline' )
-			->will( $this->returnValue( $this->_mock ) );
+		$this->mock->expects( $this->once() )->method( 'pipeline' )
+			->will( $this->returnValue( $this->mock ) );
 
-		$this->_mock->expects( $this->once() )->method( 'mset' )
+		$this->mock->expects( $this->once() )->method( 'mset' )
 			->with( $this->equalTo( array( '1-t:1' => 'test 1' ) ) );
 
-		$this->_mock->expects( $this->exactly( 2 ) )->method( 'sadd' );
+		$this->mock->expects( $this->exactly( 2 ) )->method( 'sadd' );
 
-		$this->_mock->expects( $this->once() )->method( 'execute' );
+		$this->mock->expects( $this->once() )->method( 'execute' );
 
-		$this->_mock->expects( $this->once() )->method( 'expireat' )
+		$this->mock->expects( $this->once() )->method( 'expireat' )
 			->with( $this->equalTo( '1-t:1' ), $this->greaterThan( 0 ) );
 
-		$this->_object->setList( array( 't:1' => 'test 1' ), array( 'tag1', 'tag2' ), array( 't:1' => '2000-01-01 00:00:00' ) );
+		$this->object->setList( array( 't:1' => 'test 1' ), array( 'tag1', 'tag2' ), array( 't:1' => '2000-01-01 00:00:00' ) );
 	}
 }

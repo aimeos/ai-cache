@@ -19,8 +19,8 @@ class MW_Cache_Redis
 	extends MW_Cache_Abstract
 	implements MW_Cache_Interface
 {
-	private $_client;
-	private $_siteid;
+	private $client;
+	private $siteid;
 
 
 	/**
@@ -31,10 +31,10 @@ class MW_Cache_Redis
 	 */
 	public function __construct( array $config, Predis\Client $client )
 	{
-		$this->_client = $client;
-		$this->_siteid = ( isset( $config['siteid'] ) ? $config['siteid'] . '-' : null );
+		$this->client = $client;
+		$this->siteid = ( isset( $config['siteid'] ) ? $config['siteid'] . '-' : null );
 
-		if( isset( $config['auth'] ) && !$this->_client->auth( $config['auth'] ) ) {
+		if( isset( $config['auth'] ) && !$this->client->auth( $config['auth'] ) ) {
 			throw new MW_Cache_Exception( 'Authentication failed for Redis' );
 		}
 	}
@@ -51,10 +51,10 @@ class MW_Cache_Redis
 	public function deleteList( array $keys )
 	{
 		foreach( $keys as $idx => $key ) {
-			$keys[$idx] = $this->_siteid . $key;
+			$keys[$idx] = $this->siteid . $key;
 		}
 
-		$this->_client->del( $keys );
+		$this->client->del( $keys );
 	}
 
 
@@ -69,11 +69,11 @@ class MW_Cache_Redis
 	public function deleteByTags( array $tags )
 	{
 		$result = $tagKeys = array();
-		$pipe = $this->_client->pipeline();
+		$pipe = $this->client->pipeline();
 
 		foreach( $tags as $tag )
 		{
-			$tag = $this->_siteid . 'tag:' . $tag;
+			$tag = $this->siteid . 'tag:' . $tag;
 			$pipe->smembers( $tag );
 			$tagKeys[] = $tag;
 		}
@@ -85,7 +85,7 @@ class MW_Cache_Redis
 			}
 		}
 
-		$this->_client->del( array_merge( array_keys( $result ), $tagKeys ) );
+		$this->client->del( array_merge( array_keys( $result ), $tagKeys ) );
 	}
 
 
@@ -104,7 +104,7 @@ class MW_Cache_Redis
 	 */
 	public function flush()
 	{
-		$this->_client->flushdb();
+		$this->client->flushdb();
 	}
 
 
@@ -120,7 +120,7 @@ class MW_Cache_Redis
 	 */
 	public function get( $key, $default = null )
 	{
-		if( ( $result = $this->_client->get( $this->_siteid . $key ) ) === null ) {
+		if( ( $result = $this->client->get( $this->siteid . $key ) ) === null ) {
 			return $default;
 		}
 
@@ -143,10 +143,10 @@ class MW_Cache_Redis
 		$result = $actkeys = array();
 
 		foreach( $keys as $idx => $key ) {
-			$actkeys[$idx] = $this->_siteid . $key;
+			$actkeys[$idx] = $this->siteid . $key;
 		}
 
-		foreach( $this->_client->mget( $actkeys ) as $idx => $value )
+		foreach( $this->client->mget( $actkeys ) as $idx => $value )
 		{
 			if( $value !== null && isset( $keys[$idx] ) ) {
 				$result[ $keys[$idx] ] = $value;
@@ -170,11 +170,11 @@ class MW_Cache_Redis
 	public function getListByTags( array $tags )
 	{
 		$result = $actkeys = array();
-		$len = strlen( $this->_siteid );
-		$pipe = $this->_client->pipeline();
+		$len = strlen( $this->siteid );
+		$pipe = $this->client->pipeline();
 
 		foreach( $tags as $tag ) {
-			$pipe->smembers( $this->_siteid . 'tag:' . $tag );
+			$pipe->smembers( $this->siteid . 'tag:' . $tag );
 		}
 
 		foreach( $pipe->execute() as $keys )
@@ -184,7 +184,7 @@ class MW_Cache_Redis
 			}
 		}
 
-		foreach( $this->_client->mget( array_keys( $actkeys ) ) as $idx => $value )
+		foreach( $this->client->mget( array_keys( $actkeys ) ) as $idx => $value )
 		{
 			if( isset( $keys[$idx] ) ) {
 				$result[ substr( $keys[$idx], $len ) ] = $value;
@@ -209,12 +209,12 @@ class MW_Cache_Redis
 	 */
 	public function set( $key, $value, array $tags = array(), $expires = null )
 	{
-		$key = $this->_siteid . $key;
-		$pipe = $this->_client->pipeline();
+		$key = $this->siteid . $key;
+		$pipe = $this->client->pipeline();
 		$pipe->set( $key, $value );
 
 		foreach( $tags as $tag ) {
-			$pipe->sadd( $this->_siteid . 'tag:' . $tag, $key );
+			$pipe->sadd( $this->siteid . 'tag:' . $tag, $key );
 		}
 
 		if( $expires !== null && ( $timestamp = strtotime( $expires ) ) !== false ) {
@@ -241,10 +241,10 @@ class MW_Cache_Redis
 	public function setList( array $pairs, array $tags = array(), array $expires = array() )
 	{
 		$actpairs = array();
-		$pipe = $this->_client->pipeline();
+		$pipe = $this->client->pipeline();
 
 		foreach( $pairs as $key => $value ) {
-			$actpairs[ $this->_siteid . $key ] = $value;
+			$actpairs[ $this->siteid . $key ] = $value;
 		}
 
 		$pipe->mset( $actpairs );
@@ -252,12 +252,12 @@ class MW_Cache_Redis
 		foreach( $tags as $key => $tagList )
 		{
 			foreach( (array) $tagList as $tag ) {
-				$pipe->sadd( $this->_siteid . 'tag:' . $tag, $this->_siteid . $key );
+				$pipe->sadd( $this->siteid . 'tag:' . $tag, $this->siteid . $key );
 			}
 		}
 
 		foreach( $expires as $key => $datetime ) {
-			$pipe->expireat( $this->_siteid . $key, strtotime( $datetime ) );
+			$pipe->expireat( $this->siteid . $key, strtotime( $datetime ) );
 		}
 
 		$pipe->execute();
