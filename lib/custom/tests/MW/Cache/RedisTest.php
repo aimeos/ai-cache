@@ -7,7 +7,7 @@
  */
 
 
-class MW_Cache_RedisTest extends MW_Unittest_Testcase
+class MW_Cache_RedisTest extends PHPUnit_Framework_TestCase
 {
 	private $mock;
 	private $object;
