@@ -6,7 +6,7 @@
  * @copyright Aimeos (aimeos.org), 2015
  */
 
-class MAdmin_Cache_Manager_RedisTest extends MW_Unittest_Testcase
+class MAdmin_Cache_Manager_RedisTest extends PHPUnit_Framework_TestCase
 {
 	private $object;
 

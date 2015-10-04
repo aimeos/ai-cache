@@ -9,7 +9,7 @@
  */
 
 
-class MW_Cache_RedisServerTest extends MW_Unittest_Testcase
+class MW_Cache_RedisServerTest extends PHPUnit_Framework_TestCase
 {
 	public function testRun()
 	{
