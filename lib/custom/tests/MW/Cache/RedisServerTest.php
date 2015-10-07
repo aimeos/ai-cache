@@ -1,30 +1,31 @@
 <?php
 
+namespace Aimeos\MW\Cache;
+
+
 /**
- * Real test against server for class MW_Cache_Redis.
+ * Real test against server for class \Aimeos\MW\Cache\Redis.
  *
  * @license LGPLv3, http://www.gnu.org/licenses/lgpl.html
  * @copyright Metaways Infosystems GmbH, 2014
  * @copyright Aimeos (aimeos.org), 2015
  */
-
-
-class MW_Cache_RedisServerTest extends PHPUnit_Framework_TestCase
+class RedisServerTest extends \PHPUnit_Framework_TestCase
 {
 	public function testRun()
 	{
-		if( !class_exists( 'Predis\\Client' ) ) {
+		if( !class_exists( '\\Predis\\Client' ) ) {
 			$this->markTestSkipped( 'Predis library not available' );
 		}
 
 		try
 		{
-			$predis = new Predis\Client();
+			$predis = new \Predis\Client();
 
-			$client = new MW_Cache_Redis( array( 'siteid' => 1 ), $predis );
+			$client = new \Aimeos\MW\Cache\Redis( array( 'siteid' => 1 ), $predis );
 			$client->flush();
 		}
-		catch( Exception $e )
+		catch( \Exception $e )
 		{
 			$this->markTestSkipped( 'Predis server not available' );
 		}

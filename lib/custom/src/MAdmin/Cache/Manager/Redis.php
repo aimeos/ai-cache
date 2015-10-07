@@ -9,15 +9,18 @@
  */
 
 
+namespace Aimeos\MAdmin\Cache\Manager;
+
+
 /**
  * Redis cache manager implementation.
  *
  * @package MAdmin
  * @subpackage Cache
  */
-class MAdmin_Cache_Manager_Redis
-	extends MAdmin_Common_Manager_Abstract
-	implements MAdmin_Cache_Manager_Interface
+class Redis
+	extends \Aimeos\MAdmin\Common\Manager\Base
+	implements \Aimeos\MAdmin\Cache\Manager\Iface
 {
 	private $object;
 	private $searchConfig = array(
@@ -26,7 +29,7 @@ class MAdmin_Cache_Manager_Redis
 			'internalcode' => '"id"',
 			'label' => 'Cache ID',
 			'type' => 'string',
-			'internaltype' => MW_DB_Statement_Abstract::PARAM_STR,
+			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_STR,
 		),
 	);
 
@@ -34,7 +37,7 @@ class MAdmin_Cache_Manager_Redis
 	/**
 	 * Returns the cache object
 	 *
-	 * @return MW_Cache_Interface Cache object
+	 * @return \Aimeos\MW\Cache\Iface Cache object
 	 */
 	public function getCache()
 	{
@@ -46,14 +49,14 @@ class MAdmin_Cache_Manager_Redis
 			$conn = $config->get( 'resource/cache/redis/connection' );
 			$conf = $config->get( 'resource/cache/redis', array() );
 
-			if( !class_exists( 'Predis\\Client' ) ) {
-				throw new MAdmin_Cache_Exception( sprintf( 'Please install "%1$s" via composer first', 'predis/predis' ) );
+			if( !class_exists( '\\Predis\\Client' ) ) {
+				throw new \Aimeos\MAdmin\Cache\Exception( sprintf( 'Please install "%1$s" via composer first', 'predis/predis' ) );
 			}
 
-			$client = new Predis\Client( $conn, $conf );
+			$client = new \Predis\Client( $conn, $conf );
 			$conf = array( 'siteid' => $context->getLocale()->getSiteId() );
 
-			$this->object = MW_Cache_Factory::createManager( 'Redis', $conf, $client );
+			$this->object = \Aimeos\MW\Cache\Factory::createManager( 'Redis', $conf, $client );
 		}
 
 		return $this->object;
@@ -63,7 +66,7 @@ class MAdmin_Cache_Manager_Redis
 	/**
 	 * Create new cache item object.
 	 *
-	 * @return MAdmin_Cache_Item_Interface
+	 * @return \Aimeos\MAdmin\Cache\Item\Iface
 	 */
 	public function createItem()
 	{
@@ -74,14 +77,14 @@ class MAdmin_Cache_Manager_Redis
 	/**
 	 * Adds a new cache to the storage.
 	 *
-	 * @param MAdmin_Cache_Item_Interface $item Cache item that should be saved to the storage
+	 * @param \Aimeos\MAdmin\Cache\Item\Iface $item Cache item that should be saved to the storage
 	 * @param boolean $fetch True if the new ID should be returned in the item
 	 */
-	public function saveItem( MShop_Common_Item_Interface $item, $fetch = true )
+	public function saveItem( \Aimeos\MShop\Common\Item\Iface $item, $fetch = true )
 	{
-		$iface = 'MAdmin_Cache_Item_Interface';
+		$iface = '\\Aimeos\\MAdmin\\Cache\\Item\\Iface';
 		if( !( $item instanceof $iface ) ) {
-			throw new MAdmin_Cache_Exception( sprintf( 'Object is not of required type "%1$s"', $iface ) );
+			throw new \Aimeos\MAdmin\Cache\Exception( sprintf( 'Object is not of required type "%1$s"', $iface ) );
 		}
 
 		if( ! $item->isModified() ) {
@@ -112,13 +115,13 @@ class MAdmin_Cache_Manager_Redis
 	 *
 	 * @param integer $id Cache ID to fetch cache object for
 	 * @param array $ref List of domains to fetch list items and referenced items for
-	 * @return MAdmin_Cache_Item_Interface Returns the cache item of the given id
-	 * @throws MAdmin_Cache_Exception If item couldn't be found
+	 * @return \Aimeos\MAdmin\Cache\Item\Iface Returns the cache item of the given id
+	 * @throws \Aimeos\MAdmin\Cache\Exception If item couldn't be found
 	 */
 	public function getItem( $id, array $ref = array() )
 	{
 		if( ( $value = $this->getCache()->get( $id ) ) === null ) {
-			throw new MAdmin_Cache_Exception( sprintf( 'Item with ID "%1$s" not found', $id ) );
+			throw new \Aimeos\MAdmin\Cache\Exception( sprintf( 'Item with ID "%1$s" not found', $id ) );
 		}
 
 		return $this->createItemBase( array( 'id' => $id, 'value' => $value ) );
@@ -128,12 +131,12 @@ class MAdmin_Cache_Manager_Redis
 	/**
 	 * Search for cache entries based on the given criteria.
 	 *
-	 * @param MW_Common_Criteria_Interface $search Search object containing the conditions
+	 * @param \Aimeos\MW\Common\Criteria\Iface $search Search object containing the conditions
 	 * @param integer &$total Number of items that are available in total
 	 *
-	 * @return array List of cache items implementing MAdmin_Cache_Item_Interface
+	 * @return array List of cache items implementing \Aimeos\MAdmin\Cache\Item\Iface
 	 */
-	public function searchItems( MW_Common_Criteria_Interface $search, array $ref = array(), &$total = null )
+	public function searchItems( \Aimeos\MW\Common\Criteria\Iface $search, array $ref = array(), &$total = null )
 	{
 		/** Not available in a reasonable implemented way by Redis */
 		return array();
@@ -144,7 +147,7 @@ class MAdmin_Cache_Manager_Redis
 	 * Returns the attributes that can be used for searching.
 	 *
 	 * @param boolean $withsub Return also attributes of sub-managers if true
-	 * @return array Returns a list of attribtes implementing MW_Common_Criteria_Attribute_Interface
+	 * @return array Returns a list of attribtes implementing \Aimeos\MW\Common\Criteria\Attribute\Iface
 	 */
 	public function getSearchAttributes( $withsub = true )
 	{
@@ -171,12 +174,12 @@ class MAdmin_Cache_Manager_Redis
 	 * Create new admin cache item object initialized with given parameters.
 	 *
 	 * @param array $values Associative list of key/value pairs of a job
-	 * @return MAdmin_Cache_Item_Interface
+	 * @return \Aimeos\MAdmin\Cache\Item\Iface
 	 */
 	protected function createItemBase( array $values = array() )
 	{
 		$values['siteid'] = $this->getContext()->getLocale()->getSiteId();
 
-		return new MAdmin_Cache_Item_Default( $values );
+		return new \Aimeos\MAdmin\Cache\Item\Standard( $values );
 	}
 }

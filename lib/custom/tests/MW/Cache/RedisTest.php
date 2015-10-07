@@ -1,13 +1,14 @@
 <?php
 
+namespace Aimeos\MW\Cache;
+
+
 /**
  * @license LGPLv3, http://www.gnu.org/licenses/lgpl.html
  * @copyright Metaways Infosystems GmbH, 2014
  * @copyright Aimeos (aimeos.org), 2015
  */
-
-
-class MW_Cache_RedisTest extends PHPUnit_Framework_TestCase
+class RedisTest extends \PHPUnit_Framework_TestCase
 {
 	private $mock;
 	private $object;
@@ -27,8 +28,8 @@ class MW_Cache_RedisTest extends PHPUnit_Framework_TestCase
 			'sadd', 'set', 'smembers'
 		);
 
-		$this->mock = $this->getMockBuilder( 'Predis\\Client' )->setMethods( $methods )->getMock();
-		$this->object = new MW_Cache_Redis( array( 'siteid' => 1 ), $this->mock );
+		$this->mock = $this->getMockBuilder( '\\Predis\\Client' )->setMethods( $methods )->getMock();
+		$this->object = new \Aimeos\MW\Cache\Redis( array( 'siteid' => 1 ), $this->mock );
 	}
 
 

@@ -1,12 +1,14 @@
 <?php
 
+namespace Aimeos\MAdmin\Cache\Manager;
+
+
 /**
  * @license LGPLv3, http://www.gnu.org/licenses/lgpl.html
  * @copyright Metaways Infosystems GmbH, 2014
  * @copyright Aimeos (aimeos.org), 2015
  */
-
-class MAdmin_Cache_Manager_RedisTest extends PHPUnit_Framework_TestCase
+class RedisTest extends \PHPUnit_Framework_TestCase
 {
 	private $object;
 
@@ -19,8 +21,8 @@ class MAdmin_Cache_Manager_RedisTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->context = TestHelper::getContext();
-		$this->object = new MAdmin_Cache_Manager_Redis( $this->context );
+		$this->context = \TestHelper::getContext();
+		$this->object = new \Aimeos\MAdmin\Cache\Manager\Redis( $this->context );
 	}
 
 
@@ -44,21 +46,21 @@ class MAdmin_Cache_Manager_RedisTest extends PHPUnit_Framework_TestCase
 
 	public function testCreateItem()
 	{
-		$this->assertInstanceOf( 'MAdmin_Cache_Item_Interface', $this->object->createItem() );
+		$this->assertInstanceOf( '\\Aimeos\\MAdmin\\Cache\\Item\\Iface', $this->object->createItem() );
 	}
 
 
 	public function testGetSearchAttributes()
 	{
 		foreach( $this->object->getSearchAttributes() as $attr ) {
-			$this->assertInstanceOf('MW_Common_Criteria_Attribute_Interface', $attr );
+			$this->assertInstanceOf('\\Aimeos\\MW\\Common\\Criteria\\Attribute\\Iface', $attr );
 		}
 	}
 
 
 	public function testGetSubManager()
 	{
-		$this->setExpectedException('MAdmin_Exception');
+		$this->setExpectedException('\\Aimeos\\MAdmin\\Exception');
 		$this->object->getSubManager( 'unknown' );
 	}
 
@@ -74,50 +76,50 @@ class MAdmin_Cache_Manager_RedisTest extends PHPUnit_Framework_TestCase
 
 	public function testGetItem()
 	{
-		$context = TestHelper::getContext();
+		$context = \TestHelper::getContext();
 
-		$mockRedis = $this->getMockBuilder( 'MW_Cache_Redis' )
+		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
 
 		$mockRedis->expects( $this->once() )->method( 'get' )->will( $this->returnValue( 'test value' ) );
 
-		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
-		$this->assertInstanceOf( 'MAdmin_Cache_Item_Interface', $mock->getItem( 'test' ) );
+		$this->assertInstanceOf( '\\Aimeos\\MAdmin\\Cache\\Item\\Iface', $mock->getItem( 'test' ) );
 	}
 
 
 	public function testGetItemException()
 	{
-		$context = TestHelper::getContext();
+		$context = \TestHelper::getContext();
 
-		$mockRedis = $this->getMockBuilder( 'MW_Cache_Redis' )
+		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
 
-		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
-		$this->setExpectedException( 'MAdmin_Cache_Exception' );
+		$this->setExpectedException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
 		$mock->getItem( 'test' );
 	}
 
 
 	public function testSaveItem()
 	{
-		$context = TestHelper::getContext();
+		$context = \TestHelper::getContext();
 
-		$mockRedis = $this->getMockBuilder( 'MW_Cache_Redis' )
+		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'delete', 'set' ) )->getMock();
 
 		$mockRedis->expects( $this->once() )->method( 'delete' );
 		$mockRedis->expects( $this->once() )->method( 'set' );
 
-		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
@@ -131,9 +133,9 @@ class MAdmin_Cache_Manager_RedisTest extends PHPUnit_Framework_TestCase
 
 	public function testSaveItemNotModified()
 	{
-		$context = TestHelper::getContext();
+		$context = \TestHelper::getContext();
 
-		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
 
 		$mock->saveItem( $mock->createItem() );
@@ -142,20 +144,20 @@ class MAdmin_Cache_Manager_RedisTest extends PHPUnit_Framework_TestCase
 
 	public function testSaveItemInvalid()
 	{
-		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();
 
-		$this->setExpectedException( 'MAdmin_Cache_Exception' );
-		$mock->saveItem( new MAdmin_Log_Item_Default() );
+		$this->setExpectedException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
+		$mock->saveItem( new \Aimeos\MAdmin\Log\Item\Standard() );
 	}
 
 
 	public function testDeleteItems()
 	{
-		$mockRedis = $this->getMockBuilder( 'MW_Cache_Redis' )
+		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'deleteList' ) )->getMock();
 
-		$mock = $this->getMockBuilder( 'MAdmin_Cache_Manager_Redis' )
+		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
@@ -166,6 +168,6 @@ class MAdmin_Cache_Manager_RedisTest extends PHPUnit_Framework_TestCase
 
 	public function testGetCache()
 	{
-		$this->assertInstanceOf( 'MW_Cache_Interface', $this->object->getCache() );
+		$this->assertInstanceOf( '\\Aimeos\\MW\\Cache\\Iface', $this->object->getCache() );
 	}
 }

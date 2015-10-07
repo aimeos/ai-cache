@@ -9,15 +9,18 @@
  */
 
 
+namespace Aimeos\MW\Cache;
+
+
 /**
  * Redis cache class.
  *
  * @package MW
  * @subpackage Cache
  */
-class MW_Cache_Redis
-	extends MW_Cache_Abstract
-	implements MW_Cache_Interface
+class Redis
+	extends \Aimeos\MW\Cache\Base
+	implements \Aimeos\MW\Cache\Iface
 {
 	private $client;
 	private $siteid;
@@ -29,13 +32,13 @@ class MW_Cache_Redis
 	 * @param array $config Configuration for Predis client if instance should be created
 	 * @param Predis\Client $client Predis client instance
 	 */
-	public function __construct( array $config, Predis\Client $client )
+	public function __construct( array $config, \Predis\Client $client )
 	{
 		$this->client = $client;
 		$this->siteid = ( isset( $config['siteid'] ) ? $config['siteid'] . '-' : null );
 
 		if( isset( $config['auth'] ) && !$this->client->auth( $config['auth'] ) ) {
-			throw new MW_Cache_Exception( 'Authentication failed for Redis' );
+			throw new \Aimeos\MW\Cache\Exception( 'Authentication failed for Redis' );
 		}
 	}
 
@@ -100,7 +103,7 @@ class MW_Cache_Redis
 	 * long for billions of keys. Therefore, flush() clears the cache entries of
 	 * all sites.
 	 *
-	 * @throws MW_Cache_Exception If the cache server doesn't respond
+	 * @throws \Aimeos\MW\Cache\Exception If the cache server doesn't respond
 	 */
 	public function flush()
 	{
