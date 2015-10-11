@@ -131,12 +131,12 @@ class Redis
 	/**
 	 * Search for cache entries based on the given criteria.
 	 *
-	 * @param \Aimeos\MW\Common\Criteria\Iface $search Search object containing the conditions
+	 * @param \Aimeos\MW\Criteria\Iface $search Search object containing the conditions
 	 * @param integer &$total Number of items that are available in total
 	 *
 	 * @return array List of cache items implementing \Aimeos\MAdmin\Cache\Item\Iface
 	 */
-	public function searchItems( \Aimeos\MW\Common\Criteria\Iface $search, array $ref = array(), &$total = null )
+	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = array(), &$total = null )
 	{
 		/** Not available in a reasonable implemented way by Redis */
 		return array();
@@ -147,7 +147,7 @@ class Redis
 	 * Returns the attributes that can be used for searching.
 	 *
 	 * @param boolean $withsub Return also attributes of sub-managers if true
-	 * @return array Returns a list of attribtes implementing \Aimeos\MW\Common\Criteria\Attribute\Iface
+	 * @return array Returns a list of attribtes implementing \Aimeos\MW\Criteria\Attribute\Iface
 	 */
 	public function getSearchAttributes( $withsub = true )
 	{

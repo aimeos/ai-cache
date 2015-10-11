@@ -53,7 +53,7 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 	public function testGetSearchAttributes()
 	{
 		foreach( $this->object->getSearchAttributes() as $attr ) {
-			$this->assertInstanceOf('\\Aimeos\\MW\\Common\\Criteria\\Attribute\\Iface', $attr );
+			$this->assertInstanceOf('\\Aimeos\\MW\\Criteria\\Attribute\\Iface', $attr );
 		}
 	}
 
