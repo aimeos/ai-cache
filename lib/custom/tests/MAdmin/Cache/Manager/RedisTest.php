@@ -168,6 +168,10 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 
 	public function testGetCache()
 	{
-		$this->assertInstanceOf( '\\Aimeos\\MW\\Cache\\Iface', $this->object->getCache() );
+		try {
+			$this->assertInstanceOf( '\\Aimeos\\MW\\Cache\\Iface', $this->object->getCache() );
+		} catch( \Aimeos\MAdmin\Cache\Exception $e ) {
+			$this->markTestSkipped( 'Please install Predis client first' );
+		}
 	}
 }
