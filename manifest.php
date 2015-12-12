@@ -11,10 +11,4 @@ return array(
 	'i18n' => array(
 		'custom' => 'lib/custom/i18n',
 	),
-	'config' => array(
-	),
-	'custom' => array(
-	),
-	'setup' => array(
-	),
 );
