@@ -3,32 +3,32 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Aimeos <aimeos@aimeos.org>, 2015
+# Bruce Liu <zcon.bruce@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: ai-cache\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-03 16:55+0200\n"
-"PO-Revision-Date: 2015-09-30 09:36+0000\n"
-"Last-Translator: Aimeos <aimeos@aimeos.org>\n"
-"Language-Team: German (http://www.transifex.com/aimeos/ai-cache/language/de/)\n"
+"PO-Revision-Date: 2016-06-06 05:32+0000\n"
+"Last-Translator: Bruce Liu <zcon.bruce@gmail.com>\n"
+"Language-Team: Chinese (http://www.transifex.com/aimeos/ai-cache/language/zh/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/MAdmin/Cache/Manager/Redis.php:124
 #, php-format
 msgid "Item with ID \"%1$s\" not found"
-msgstr "Eintrag mit ID \"%1$s\" nicht gefunden"
+msgstr "找不到ID為 \"%1$s\" 的項目"
 
 #: src/MAdmin/Cache/Manager/Redis.php:87
 #, php-format
 msgid "Object is not of required type \"%1$s\""
-msgstr "Objekt ist nicht vom erforderlichen Typ \"%1$s\""
+msgstr "找不到類型為 \"%1$s\" 的物件"
 
 #: src/MAdmin/Cache/Manager/Redis.php:53
 #, php-format
 msgid "Please install \"%1$s\" via composer first"
-msgstr "Bitte installieren Sie mit \"composer\" zuerst \"%1$s\""
+msgstr "請先透過composer安裝 \"%1$s\""
