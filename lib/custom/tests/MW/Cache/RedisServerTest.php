@@ -35,7 +35,7 @@ class RedisServerTest extends \PHPUnit_Framework_TestCase
 		$valSingle = $client->get( 'arc-single-key' );
 		$valNone = $client->get( 'arc-no-key', 'none' );
 
-		$client->set( 'arc-mkey3', 'mvalue3', array(), '2000-01-01 00:00:00' );
+		$client->set( 'arc-mkey3', 'mvalue3', '2000-01-01 00:00:00' );
 		$valExpired = $client->get( 'arc-mkey3' );
 
 		$client->setMultiple( array( 'arc-mkey1' => 'mvalue1', 'arc-mkey2' => 'mvalue2' ) );
@@ -44,7 +44,7 @@ class RedisServerTest extends \PHPUnit_Framework_TestCase
 		$pairs = array( 'arc-mkey4' => 'mvalue4', 'arc-mkey5' => 'mvalue5' );
 		$tags = array( 'arc-mkey4' => 'arc-mtag4', 'arc-mkey5' => 'arc-mtag5' );
 		$expires = array( 'arc-mkey5' => '2000-01-01 00:00:00' );
-		$client->setMultiple( $pairs, $tags, $expires );
+		$client->setMultiple( $pairs, $expires, $tags );
 		$listExpired = $client->getMultiple( array( 'arc-mkey4', 'arc-mkey5' ) );
 
 		$client->deleteByTags( array( 'arc-mtag4', 'arc-mtag5' ) );
