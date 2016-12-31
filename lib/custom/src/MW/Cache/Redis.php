@@ -228,8 +228,10 @@ class Redis
 			$pipe->sadd( $this->siteid . 'tag:' . $tag, $key );
 		}
 
-		if( $expires !== null && ( $timestamp = strtotime( $expires ) ) !== false ) {
-			$pipe->expireat( $key, $timestamp );
+		if( is_string( $expires ) ) {
+			$pipe->expireat( $key, date_create( $expires )->getTimestamp() );
+		} elseif( is_int( $expires ) ) {
+			$pipe->expireat( $key, $expires );
 		}
 
 		$pipe->execute();
@@ -244,7 +246,7 @@ class Redis
 	 *
 	 * @param iterable $pairs Associative list of key/value pairs. Both must be
 	 * 	a string
-	 * @param int|string|array $expires Associative list of keys and datetime
+	 * @param array|int|string|null $expires Associative list of keys and datetime
 	 *  string or integer TTL pairs.
 	 * @param array $tags Associative list of key/tag or key/tags pairs that
 	 *  should be associated to the values identified by their key. The value
@@ -261,15 +263,22 @@ class Redis
 
 		$pipe->mset( $actpairs );
 
+		foreach( $pairs as $key => $value )
+		{
+			$expire = ( is_array( $expires ) && isset( $expires[$key] ) ? $expires[$key] : $expires );
+
+			if( is_string( $expire ) ) {
+				$pipe->expireat( $this->siteid . $key, date_create( $expire )->getTimestamp() );
+			} elseif( is_int( $expire ) ) {
+				$pipe->expire( $this->siteid . $key, $expire );
+			}
+		}
+
 		foreach( $tags as $key => $tagList )
 		{
 			foreach( (array) $tagList as $tag ) {
 				$pipe->sadd( $this->siteid . 'tag:' . $tag, $this->siteid . $key );
 			}
-		}
-
-		foreach( $expires as $key => $datetime ) {
-			$pipe->expireat( $this->siteid . $key, strtotime( $datetime ) );
 		}
 
 		$pipe->execute();

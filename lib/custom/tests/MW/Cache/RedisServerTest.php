@@ -23,7 +23,7 @@ class RedisServerTest extends \PHPUnit_Framework_TestCase
 			$predis = new \Predis\Client();
 
 			$client = new \Aimeos\MW\Cache\Redis( array( 'siteid' => 1 ), $predis );
-			$client->flush();
+			$client->clear();
 		}
 		catch( \Exception $e )
 		{
