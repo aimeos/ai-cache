@@ -38,20 +38,20 @@ class RedisServerTest extends \PHPUnit_Framework_TestCase
 		$client->set( 'arc-mkey3', 'mvalue3', array(), '2000-01-01 00:00:00' );
 		$valExpired = $client->get( 'arc-mkey3' );
 
-		$client->setList( array( 'arc-mkey1' => 'mvalue1', 'arc-mkey2' => 'mvalue2' ) );
-		$listNormal = $client->getList( array( 'arc-mkey1', 'arc-mkey2' ) );
+		$client->setMultiple( array( 'arc-mkey1' => 'mvalue1', 'arc-mkey2' => 'mvalue2' ) );
+		$listNormal = $client->getMultiple( array( 'arc-mkey1', 'arc-mkey2' ) );
 
 		$pairs = array( 'arc-mkey4' => 'mvalue4', 'arc-mkey5' => 'mvalue5' );
 		$tags = array( 'arc-mkey4' => 'arc-mtag4', 'arc-mkey5' => 'arc-mtag5' );
 		$expires = array( 'arc-mkey5' => '2000-01-01 00:00:00' );
-		$client->setList( $pairs, $tags, $expires );
-		$listExpired = $client->getList( array( 'arc-mkey4', 'arc-mkey5' ) );
+		$client->setMultiple( $pairs, $tags, $expires );
+		$listExpired = $client->getMultiple( array( 'arc-mkey4', 'arc-mkey5' ) );
 
 		$client->deleteByTags( array( 'arc-mtag4', 'arc-mtag5' ) );
-		$listDelByTags = $client->getList( array( 'arc-mkey4', 'arc-mkey5' ) );
+		$listDelByTags = $client->getMultiple( array( 'arc-mkey4', 'arc-mkey5' ) );
 
-		$client->deleteList( array( 'arc-mkey1', 'arc-mkey2' ) );
-		$listDelList = $client->getList( array( 'arc-mkey1', 'arc-mkey2' ) );
+		$client->deleteMultiple( array( 'arc-mkey1', 'arc-mkey2' ) );
+		$listDelList = $client->getMultiple( array( 'arc-mkey1', 'arc-mkey2' ) );
 
 		$client->delete( 'arc-single-key' );
 		$valDelSingle = $client->get( 'arc-single-key' );

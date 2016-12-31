@@ -44,6 +44,25 @@ class Redis
 
 
 	/**
+	 * Removes all entries of the site from the cache.
+	 *
+	 * @inheritDoc
+	 *
+	 * As Redis does only provider up to 20 different databases, this isn't enough
+	 * to use one of them for each site. Alternatively, using the KEYS command
+	 * to fetch all cache keys of a site and delete them afterwards can take very
+	 * long for billions of keys. Therefore, flush() clears the cache entries of
+	 * all sites.
+	 *
+	 * @throws \Aimeos\MW\Cache\Exception If the cache server doesn't respond
+	 */
+	public function clear()
+	{
+		$this->client->flushdb();
+	}
+
+
+	/**
 	 * Removes the cache entries identified by the given keys.
 	 *
 	 * @inheritDoc
@@ -51,7 +70,7 @@ class Redis
 	 * @param array $keys List of key strings that identify the cache entries
 	 * 	that should be removed
 	 */
-	public function deleteList( array $keys )
+	public function deleteMultiple( $keys )
 	{
 		foreach( $keys as $idx => $key ) {
 			$keys[$idx] = $this->siteid . $key;
@@ -93,25 +112,6 @@ class Redis
 
 
 	/**
-	 * Removes all entries of the site from the cache.
-	 *
-	 * @inheritDoc
-	 *
-	 * As Redis does only provider up to 20 different databases, this isn't enough
-	 * to use one of them for each site. Alternatively, using the KEYS command
-	 * to fetch all cache keys of a site and delete them afterwards can take very
-	 * long for billions of keys. Therefore, flush() clears the cache entries of
-	 * all sites.
-	 *
-	 * @throws \Aimeos\MW\Cache\Exception If the cache server doesn't respond
-	 */
-	public function flush()
-	{
-		$this->client->flushdb();
-	}
-
-
-	/**
 	 * Returns the cached value for the given key.
 	 *
 	 * @inheritDoc
@@ -136,12 +136,13 @@ class Redis
 	 *
 	 * @inheritDoc
 	 *
-	 * @param array $keys List of key strings for the requested cache entries
+	 * @param iterable $keys List of key strings for the requested cache entries
+	 * @param mixed $default Default value to return for keys that do not exist
 	 * @return array Associative list of key/value pairs for the requested cache
 	 * 	entries. If a cache entry doesn't exist, neither its key nor a value
 	 * 	will be in the result list
 	 */
-	public function getList( array $keys )
+	public function getMultiple( $keys, $default = null )
 	{
 		$result = $actkeys = array();
 
@@ -153,6 +154,13 @@ class Redis
 		{
 			if( $value !== null && isset( $keys[$idx] ) ) {
 				$result[ $keys[$idx] ] = $value;
+			}
+		}
+
+		foreach( $keys as $key )
+		{
+			if( !isset( $result[$key] ) ) {
+				$result[$key] = $default;
 			}
 		}
 
@@ -170,7 +178,7 @@ class Redis
 	 * 	entries. If a tag isn't associated to any cache entry, nothing is returned
 	 * 	for that tag
 	 */
-	public function getListByTags( array $tags )
+	public function getMultipleByTags( array $tags )
 	{
 		$result = $actkeys = array();
 		$len = strlen( $this->siteid );
@@ -205,12 +213,12 @@ class Redis
 	 *
 	 * @param string $key Key string for the given value like product/id/123
 	 * @param mixed $value Value string that should be stored for the given key
+	 * @param int|string|null $expires Date/time string in "YYYY-MM-DD HH:mm:ss"
+	 * 	format or as TTL value when the cache entry expires
 	 * @param array $tags List of tag strings that should be assoicated to the
 	 * 	given value in the cache
-	 * @param string|null $expires Date/time string in "YYYY-MM-DD HH:mm:ss"
-	 * 	format when the cache entry expires
 	 */
-	public function set( $key, $value, array $tags = array(), $expires = null )
+	public function set( $key, $value, $expires = null, array $tags = array() )
 	{
 		$key = $this->siteid . $key;
 		$pipe = $this->client->pipeline();
@@ -234,14 +242,15 @@ class Redis
 	 *
 	 * @inheritDoc
 	 *
-	 * @param array $pairs Associative list of key/value pairs. Both must be
+	 * @param iterable $pairs Associative list of key/value pairs. Both must be
 	 * 	a string
-	 * @param array $tags Associative list of key/tag or key/tags pairs that should be
-	 * 	associated to the values identified by their key. The value associated
-	 * 	to the key can either be a tag string or an array of tag strings
-	 * @param array $expires Associative list of key/datetime pairs.
+	 * @param int|string|array $expires Associative list of keys and datetime
+	 *  string or integer TTL pairs.
+	 * @param array $tags Associative list of key/tag or key/tags pairs that
+	 *  should be associated to the values identified by their key. The value
+	 *  associated to the key can either be a tag string or an array of tag strings
 	 */
-	public function setList( array $pairs, array $tags = array(), array $expires = array() )
+	public function setMultiple( $pairs, $expires = null, array $tags = array() )
 	{
 		$actpairs = array();
 		$pipe = $this->client->pipeline();

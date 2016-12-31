@@ -1,24 +1,20 @@
 <?php
 
-namespace Aimeos\MAdmin\Cache\Manager;
-
-
 /**
  * @license LGPLv3, http://www.gnu.org/licenses/lgpl.html
  * @copyright Metaways Infosystems GmbH, 2014
  * @copyright Aimeos (aimeos.org), 2015-2016
  */
+
+
+namespace Aimeos\MAdmin\Cache\Manager;
+
+
 class RedisTest extends \PHPUnit_Framework_TestCase
 {
 	private $object;
 
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 */
 	protected function setUp()
 	{
 		$this->context = \TestHelper::getContext();
@@ -26,12 +22,6 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 *
-	 * @access protected
-	 */
 	protected function tearDown()
 	{
 		$this->object = null;
@@ -155,7 +145,7 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 	public function testDeleteItems()
 	{
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
-			->disableOriginalConstructor()->setMethods( array( 'deleteList' ) )->getMock();
+			->disableOriginalConstructor()->setMethods( array( 'deleteMultiple' ) )->getMock();
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();

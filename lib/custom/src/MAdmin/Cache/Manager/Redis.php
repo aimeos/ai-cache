@@ -95,7 +95,7 @@ class Redis
 		$cache = $this->getCache();
 
 		$cache->delete( $id );
-		$cache->set( $id, $item->getValue(), $item->getTags(), $item->getTimeExpire() );
+		$cache->set( $id, $item->getValue(), $item->getTimeExpire(), $item->getTags() );
 	}
 
 
@@ -106,7 +106,7 @@ class Redis
 	 */
 	public function deleteItems( array $ids )
 	{
-		$this->getCache()->deleteList( $ids );
+		$this->getCache()->deleteMultiple( $ids );
 	}
 
 

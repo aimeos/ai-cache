@@ -1,25 +1,21 @@
 <?php
 
-namespace Aimeos\MW\Cache;
-
-
 /**
  * @license LGPLv3, http://www.gnu.org/licenses/lgpl.html
  * @copyright Metaways Infosystems GmbH, 2014
  * @copyright Aimeos (aimeos.org), 2015-2016
  */
+
+
+namespace Aimeos\MW\Cache;
+
+
 class RedisTest extends \PHPUnit_Framework_TestCase
 {
 	private $mock;
 	private $object;
 
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @access protected
-	 */
 	protected function setUp()
 	{
 		$methods = array(
@@ -33,12 +29,6 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 *
-	 * @access protected
-	 */
 	protected function tearDown()
 	{
 		unset( $this->object, $this->mock );
@@ -54,12 +44,12 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	public function testDeleteList()
+	public function testDeleteMultiple()
 	{
 		$this->mock->expects( $this->once() )->method( 'del' )
 			->with( $this->equalTo( array( '1-test' ) ) );
 
-		$this->object->deleteList( array( 'test' ) );
+		$this->object->deleteMultiple( array( 'test' ) );
 	}
 
 
@@ -80,10 +70,10 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	public function testFlush()
+	public function testClear()
 	{
 		$this->mock->expects( $this->once() )->method( 'flushdb' );
-		$this->object->flush();
+		$this->object->clear();
 	}
 
 
@@ -112,16 +102,16 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 	}
 
 
-	public function testGetList()
+	public function testGetMultiple()
 	{
 		$this->mock->expects( $this->once() )->method( 'mget' )
 			->will( $this->returnValue( array( 0 => 'test' ) ) );
 
-		$this->assertEquals( array( 't:1' => 'test' ), $this->object->getList( array( 't:1' ) ) );
+		$this->assertEquals( array( 't:1' => 'test' ), $this->object->getMultiple( array( 't:1' ) ) );
 	}
 
 
-	public function testGetListByTags()
+	public function testGetMultipleByTags()
 	{
 		$this->mock->expects( $this->once() )->method( 'pipeline' )
 			->will( $this->returnValue( $this->mock ) );
@@ -135,7 +125,7 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 			->will( $this->returnValue( array( 0 => 'test1', 1 => 'test2' ) ) );
 
 		$expected = array( 't:1' => 'test1', 't:2' => 'test2' );
-		$result = $this->object->getListByTags( array( 'tag1', 'tag2' ) );
+		$result = $this->object->getMultipleByTags( array( 'tag1', 'tag2' ) );
 
 		$this->assertEquals( $expected, $result );
 	}
@@ -156,11 +146,11 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 		$this->mock->expects( $this->once() )->method( 'expireat' )
 			->with( $this->equalTo( '1-t:1' ), $this->greaterThan( 0 ) );
 
-		$this->object->set( 't:1', 'test 1', array( 'tag1', 'tag2' ), '2000-01-01 00:00:00' );
+		$this->object->set( 't:1', 'test 1', '2000-01-01 00:00:00', array( 'tag1', 'tag2' ) );
 	}
 
 
-	public function testSetList()
+	public function testSetMultiple()
 	{
 		$this->mock->expects( $this->once() )->method( 'pipeline' )
 			->will( $this->returnValue( $this->mock ) );
@@ -175,6 +165,6 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 		$this->mock->expects( $this->once() )->method( 'expireat' )
 			->with( $this->equalTo( '1-t:1' ), $this->greaterThan( 0 ) );
 
-		$this->object->setList( array( 't:1' => 'test 1' ), array( 'tag1', 'tag2' ), array( 't:1' => '2000-01-01 00:00:00' ) );
+		$this->object->setMultiple( array( 't:1' => 'test 1' ), array( 't:1' => '2000-01-01 00:00:00' ), array( 'tag1', 'tag2' ) );
 	}
 }
