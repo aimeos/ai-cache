@@ -90,7 +90,7 @@ class Redis
 	 */
 	public function deleteByTags( array $tags )
 	{
-		$result = $tagKeys = array();
+		$result = $tagKeys = [];
 		$pipe = $this->client->pipeline();
 
 		foreach( $tags as $tag )
@@ -144,7 +144,7 @@ class Redis
 	 */
 	public function getMultiple( $keys, $default = null )
 	{
-		$result = $actkeys = array();
+		$result = $actkeys = [];
 
 		foreach( $keys as $idx => $key ) {
 			$actkeys[$idx] = $this->siteid . $key;
@@ -180,7 +180,7 @@ class Redis
 	 */
 	public function getMultipleByTags( array $tags )
 	{
-		$result = $actkeys = array();
+		$result = $actkeys = [];
 		$len = strlen( $this->siteid );
 		$pipe = $this->client->pipeline();
 
@@ -218,7 +218,7 @@ class Redis
 	 * @param array $tags List of tag strings that should be assoicated to the
 	 * 	given value in the cache
 	 */
-	public function set( $key, $value, $expires = null, array $tags = array() )
+	public function set( $key, $value, $expires = null, array $tags = [] )
 	{
 		$key = $this->siteid . $key;
 		$pipe = $this->client->pipeline();
@@ -252,9 +252,9 @@ class Redis
 	 *  should be associated to the values identified by their key. The value
 	 *  associated to the key can either be a tag string or an array of tag strings
 	 */
-	public function setMultiple( $pairs, $expires = null, array $tags = array() )
+	public function setMultiple( $pairs, $expires = null, array $tags = [] )
 	{
-		$actpairs = array();
+		$actpairs = [];
 		$pipe = $this->client->pipeline();
 
 		foreach( $pairs as $key => $value ) {

@@ -60,7 +60,7 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 		$search = $this->object->createSearch();
 		$search->setConditions( $search->compare( '==', 'cache.id', 'unittest' ) );
 
-		$this->assertEquals( array(), $this->object->searchItems( $search ) );
+		$this->assertEquals( [], $this->object->searchItems( $search ) );
 	}
 
 
@@ -152,7 +152,7 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
-		$mock->deleteItems( array() );
+		$mock->deleteItems( [] );
 	}
 
 

@@ -47,7 +47,7 @@ class Redis
 			$config = $context->getConfig();
 
 			$conn = $config->get( 'resource/cache/redis/connection' );
-			$conf = $config->get( 'resource/cache/redis', array() );
+			$conf = $config->get( 'resource/cache/redis', [] );
 
 			if( !class_exists( '\\Predis\\Client' ) ) {
 				throw new \Aimeos\MAdmin\Cache\Exception( sprintf( 'Please install "%1$s" via composer first', 'predis/predis' ) );
@@ -137,10 +137,10 @@ class Redis
 	 *
 	 * @return array List of cache items implementing \Aimeos\MAdmin\Cache\Item\Iface
 	 */
-	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = array(), &$total = null )
+	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], &$total = null )
 	{
 		/** Not available in a reasonable implemented way by Redis */
-		return array();
+		return [];
 	}
 
 
@@ -154,7 +154,7 @@ class Redis
 	{
 		$path = 'madmin/cache/manager/submanagers';
 
-		return $this->getResourceTypeBase( 'cache', $path, array(), $withsub );
+		return $this->getResourceTypeBase( 'cache', $path, [], $withsub );
 	}
 
 
@@ -168,7 +168,7 @@ class Redis
 	{
 		$path = 'madmin/cache/manager/submanagers';
 
-		return $this->getSearchAttributesBase( $this->searchConfig, $path, array(), $withsub );
+		return $this->getSearchAttributesBase( $this->searchConfig, $path, [], $withsub );
 	}
 
 
@@ -191,7 +191,7 @@ class Redis
 	 * @param array $values Associative list of key/value pairs of a job
 	 * @return \Aimeos\MAdmin\Cache\Item\Iface
 	 */
-	protected function createItemBase( array $values = array() )
+	protected function createItemBase( array $values = [] )
 	{
 		$values['siteid'] = $this->getContext()->getLocale()->getSiteId();
 

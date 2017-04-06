@@ -62,8 +62,8 @@ class RedisServerTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( null, $valExpired );
 		$this->assertEquals( array( 'arc-mkey1' => 'mvalue1', 'arc-mkey2' => 'mvalue2' ), $listNormal );
 		$this->assertEquals( array( 'arc-mkey4' => 'mvalue4' ), $listExpired );
-		$this->assertEquals( array(), $listDelByTags );
-		$this->assertEquals( array(), $listDelList );
+		$this->assertEquals( [], $listDelByTags );
+		$this->assertEquals( [], $listDelList );
 		$this->assertEquals( null, $valDelSingle );
 	}
 }
