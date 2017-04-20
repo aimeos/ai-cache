@@ -10,7 +10,7 @@
 namespace Aimeos\MAdmin\Cache\Manager;
 
 
-class RedisTest extends \PHPUnit_Framework_TestCase
+class RedisTest extends \PHPUnit\Framework\TestCase
 {
 	private $object;
 

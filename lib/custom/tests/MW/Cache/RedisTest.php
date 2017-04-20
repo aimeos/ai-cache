@@ -10,7 +10,7 @@
 namespace Aimeos\MW\Cache;
 
 
-class RedisTest extends \PHPUnit_Framework_TestCase
+class RedisTest extends \PHPUnit\Framework\TestCase
 {
 	private $mock;
 	private $object;
