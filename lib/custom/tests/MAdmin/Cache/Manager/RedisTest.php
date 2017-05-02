@@ -50,7 +50,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetSubManager()
 	{
-		$this->expectException('\\Aimeos\\MAdmin\\Exception');
+		$this->setExpectedException('\\Aimeos\\MAdmin\\Exception');
 		$this->object->getSubManager( 'unknown' );
 	}
 
@@ -94,7 +94,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
-		$this->expectException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
+		$this->setExpectedException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
 		$mock->getItem( 'test' );
 	}
 
@@ -137,7 +137,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();
 
-		$this->expectException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
+		$this->setExpectedException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
 		$mock->saveItem( new \Aimeos\MAdmin\Log\Item\Standard() );
 	}
 
