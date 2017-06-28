@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ai-cache\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-03 12:08+0100\n"
+"POT-Creation-Date: 2017-06-28 18:42+0200\n"
 "PO-Revision-Date: 2015-11-01 00:52+0000\n"
 "Last-Translator: Metal <meteoramic@yahoo.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/aimeos/ai-cache/language/tr/)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/MAdmin/Cache/Manager/Redis.php:124
+#: src/MAdmin/Cache/Manager/Redis.php:125
 #, php-format
 msgid "Item with ID \"%1$s\" not found"
 msgstr "\"%1$s\" ID'li ürün bulunamadı"

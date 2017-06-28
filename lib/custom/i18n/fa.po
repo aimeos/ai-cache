@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ai-cache\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-03 12:08+0100\n"
+"POT-Creation-Date: 2017-06-28 18:42+0200\n"
 "PO-Revision-Date: 2015-09-30 09:25+0000\n"
 "Last-Translator: Aimeos <aimeos@aimeos.org>\n"
 "Language-Team: Persian (http://www.transifex.com/aimeos/ai-cache/language/fa/)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Language: fa\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/MAdmin/Cache/Manager/Redis.php:124
+#: src/MAdmin/Cache/Manager/Redis.php:125
 #, php-format
 msgid "Item with ID \"%1$s\" not found"
 msgstr ""
