@@ -1,17 +1,18 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Андрей Аксёнов <aksenovaa@bk.ru>, 2015
+# Aimeos <aimeos@aimeos.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: ai-cache\n"
+"Project-Id-Version: Aimeos\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-28 18:42+0200\n"
-"PO-Revision-Date: 2015-10-02 08:39+0000\n"
-"Last-Translator: Андрей Аксёнов <aksenovaa@bk.ru>\n"
-"Language-Team: Russian (http://www.transifex.com/aimeos/ai-cache/language/ru/)\n"
+"POT-Creation-Date: 2017-10-02 17:58+0200\n"
+"PO-Revision-Date: 2017-10-02 17:58+0200\n"
+"Last-Translator: Aimeos <aimeos@aimeos.org>, 2017\n"
+"Language-Team: Russian (https://www.transifex.com/aimeos/teams/39015/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
