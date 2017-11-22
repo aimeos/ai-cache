@@ -7,7 +7,7 @@ Aimeos cache extension
 [![Build Status](https://travis-ci.org/aimeos/ai-cache.svg?branch=master)](https://travis-ci.org/aimeos/ai-cache)
 [![Coverage Status](https://coveralls.io/repos/aimeos/ai-cache/badge.svg?branch=master)](https://coveralls.io/r/aimeos/ai-cache?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/aimeos/ai-cache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/aimeos/ai-cache/?branch=master)
-[![HHVM Status](http://hhvm.h4cc.de/badge/aimeos/ai-cache.svg)](http://hhvm.h4cc.de/package/aimeos/ai-cache)
+[![License](https://poser.pugx.org/aimeos/ai-cache/license.svg)](https://packagist.org/packages/aimeos/ai-cache)
 
 The Aimeos cache extension contains alternative cache implementations to the database caching of the core. They can be used by Aimeos web shops to offload generated HTML web site parts to other services like specialized key/value stores.
 
