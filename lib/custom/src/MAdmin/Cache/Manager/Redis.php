@@ -64,11 +64,13 @@ class Redis
 
 
 	/**
-	 * Create new cache item object.
+	 * Creates a new empty item instance
 	 *
-	 * @return \Aimeos\MAdmin\Cache\Item\Iface
+	 * @param string|null Type the item should be created with
+	 * @param string|null Domain of the type the item should be created with
+	 * @return \Aimeos\MShop\Attribute\Item\Iface New attribute item object
 	 */
-	public function createItem()
+	public function createItem( $type = null, $domain = null )
 	{
 		return $this->createItemBase();
 	}
