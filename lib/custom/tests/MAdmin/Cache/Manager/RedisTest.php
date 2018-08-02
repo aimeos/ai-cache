@@ -137,7 +137,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();
 
-		$this->setExpectedException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
+		$this->setExpectedException( '\\Aimeos\\MW\\Common\\Exception' );
 		$mock->saveItem( new \Aimeos\MAdmin\Log\Item\Standard() );
 	}
 
