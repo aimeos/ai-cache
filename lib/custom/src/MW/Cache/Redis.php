@@ -169,44 +169,6 @@ class Redis
 
 
 	/**
-	 * Returns the cached keys and values associated to the given tags if available.
-	 *
-	 * @inheritDoc
-	 *
-	 * @param array $tags List of tag strings associated to the requested cache entries
-	 * @return array Associative list of key/value pairs for the requested cache
-	 * 	entries. If a tag isn't associated to any cache entry, nothing is returned
-	 * 	for that tag
-	 */
-	public function getMultipleByTags( array $tags )
-	{
-		$result = $actkeys = [];
-		$len = strlen( $this->siteid );
-		$pipe = $this->client->pipeline();
-
-		foreach( $tags as $tag ) {
-			$pipe->smembers( $this->siteid . 'tag:' . $tag );
-		}
-
-		foreach( $pipe->execute() as $keys )
-		{
-			foreach( $keys as $key ) {
-				$actkeys[$key] = null;
-			}
-		}
-
-		foreach( $this->client->mget( array_keys( $actkeys ) ) as $idx => $value )
-		{
-			if( isset( $keys[$idx] ) ) {
-				$result[ substr( $keys[$idx], $len ) ] = $value;
-			}
-		}
-
-		return $result;
-	}
-
-
-	/**
 	 * Sets the value for the given key in the cache.
 	 *
 	 * @inheritDoc

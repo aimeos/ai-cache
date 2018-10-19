@@ -111,26 +111,6 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	}
 
 
-	public function testGetMultipleByTags()
-	{
-		$this->mock->expects( $this->once() )->method( 'pipeline' )
-			->will( $this->returnValue( $this->mock ) );
-
-		$this->mock->expects( $this->exactly( 2 ) )->method( 'smembers' );
-
-		$this->mock->expects( $this->once() )->method( 'execute' )
-			->will( $this->returnValue( array( '1-tag:1' => array( '1-t:1', '1-t:2' ) ) ) );
-
-		$this->mock->expects( $this->once() )->method( 'mget' )
-			->will( $this->returnValue( array( 0 => 'test1', 1 => 'test2' ) ) );
-
-		$expected = array( 't:1' => 'test1', 't:2' => 'test2' );
-		$result = $this->object->getMultipleByTags( array( 'tag1', 'tag2' ) );
-
-		$this->assertEquals( $expected, $result );
-	}
-
-
 	public function testSet()
 	{
 		$this->mock->expects( $this->once() )->method( 'pipeline' )
