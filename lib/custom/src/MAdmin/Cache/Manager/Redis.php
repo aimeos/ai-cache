@@ -56,7 +56,7 @@ class Redis
 			$client = new \Predis\Client( $conn, $conf );
 			$conf = array( 'siteid' => $context->getLocale()->getSiteId() );
 
-			$this->object = \Aimeos\MW\Cache\Factory::createManager( 'Redis', $conf, $client );
+			$this->object = \Aimeos\MW\Cache\Factory::create( 'Redis', $conf, $client );
 		}
 
 		return $this->object;
