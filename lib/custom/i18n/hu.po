@@ -3,11 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: aimeos\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 08:30+0200\n"
+"POT-Creation-Date: 2019-04-02 15:11+0200\n"
 "PO-Revision-Date: 2017-09-14 09:25+0000\n"
 "Language-Team: Hungarian (https://www.transifex.com/aimeos/teams/39015/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/MAdmin/Cache/Manager/Redis.php:124
+#: src/MAdmin/Cache/Manager/Redis.php:123
 #, php-format
 msgid "Item with ID \"%1$s\" not found"
 msgstr ""
