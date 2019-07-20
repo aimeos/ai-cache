@@ -72,6 +72,10 @@ class Redis
 	 */
 	public function deleteMultiple( $keys )
 	{
+		if( empty( $keys ) ) {
+			return;
+		}
+
 		foreach( $keys as $idx => $key ) {
 			$keys[$idx] = $this->siteid . $key;
 		}
@@ -90,6 +94,10 @@ class Redis
 	 */
 	public function deleteByTags( array $tags )
 	{
+		if( empty( $tags ) ) {
+			return;
+		}
+
 		$result = $tagKeys = [];
 		$pipe = $this->client->pipeline();
 
