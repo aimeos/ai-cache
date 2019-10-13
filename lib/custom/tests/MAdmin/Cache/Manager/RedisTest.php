@@ -132,16 +132,6 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	}
 
 
-	public function testSaveItemInvalid()
-	{
-		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
-			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();
-
-		$this->setExpectedException( '\\Aimeos\\MW\\Common\\Exception' );
-		$mock->saveItem( new \Aimeos\MAdmin\Log\Item\Standard() );
-	}
-
-
 	public function testDeleteItems()
 	{
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )

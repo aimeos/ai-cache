@@ -80,20 +80,18 @@ class Redis
 	 *
 	 * @param \Aimeos\MAdmin\Cache\Item\Iface $item Cache item that should be saved to the storage
 	 * @param boolean $fetch True if the new ID should be returned in the item
+	 * @return \Aimeos\MAdmin\Cache\Item\Iface Cache item
 	 */
-	public function saveItem( \Aimeos\MShop\Common\Item\Iface $item, $fetch = true )
+	public function saveItem( \Aimeos\MAdmin\Cache\Item\Iface $item, $fetch = true )
 	{
-		self::checkClass( '\\Aimeos\\MAdmin\\Cache\\Item\\Iface', $item );
-
-		if( ! $item->isModified() ) {
-			return;
+		if( $item->isModified() )
+		{
+			$cache = $this->getCache();
+			$cache->delete( $item->getId() );
+			$cache->set( $item->getId(), $item->getValue(), $item->getTimeExpire(), $item->getTags() );
 		}
 
-		$id = $item->getId();
-		$cache = $this->getCache();
-
-		$cache->delete( $id );
-		$cache->set( $id, $item->getValue(), $item->getTimeExpire(), $item->getTags() );
+		return $item;
 	}
 
 
