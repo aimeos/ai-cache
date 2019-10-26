@@ -28,9 +28,9 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	}
 
 
-	public function testCleanup()
+	public function testClear()
 	{
-		$this->object->cleanup( array( -1 ) );
+		$this->object->clear( array( -1 ) );
 	}
 
 
