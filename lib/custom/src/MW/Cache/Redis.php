@@ -223,7 +223,7 @@ class Redis
 			$pipe->expireat( $key, $expires );
 		}
 
-		return $pipe->execute() === 'OK' ? true : false;
+		return $pipe->execute() !== [] ? true : false;
 	}
 
 
@@ -270,6 +270,6 @@ class Redis
 			}
 		}
 
-		return $pipe->execute() === 'OK' ? true : false;
+		return $pipe->execute() !== [] ? true : false;
 	}
 }

@@ -84,6 +84,10 @@ class Redis
 	 */
 	public function saveItem( \Aimeos\MAdmin\Cache\Item\Iface $item, $fetch = true )
 	{
+		if( $item->getId() === null ) {
+			throw new \Aimeos\MAdmin\Cache\Exception( 'ID is required for caching' );
+		}
+
 		if( $item->isModified() )
 		{
 			$cache = $this->getCache();
