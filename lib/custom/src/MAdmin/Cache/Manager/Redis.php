@@ -39,7 +39,7 @@ class Redis
 	 *
 	 * @return \Aimeos\MW\Cache\Iface Cache object
 	 */
-	public function getCache()
+	public function getCache() : \Aimeos\MW\Cache\Iface
 	{
 		if( !isset( $this->object ) )
 		{
@@ -67,9 +67,9 @@ class Redis
 	 * Creates a new empty item instance
 	 *
 	 * @param array $values Values the item should be initialized with
-	 * @return \Aimeos\MShop\Attribute\Item\Iface New attribute item object
+	 * @return \Aimeos\MShop\Common\Item\Iface New item object
 	 */
-	public function createItem( array $values = [] )
+	public function createItem( array $values = [] ) : \Aimeos\MShop\Common\Item\Iface
 	{
 		return $this->createItemBase( $values );
 	}
@@ -79,10 +79,10 @@ class Redis
 	 * Adds a new cache to the storage.
 	 *
 	 * @param \Aimeos\MAdmin\Cache\Item\Iface $item Cache item that should be saved to the storage
-	 * @param boolean $fetch True if the new ID should be returned in the item
+	 * @param bool $fetch True if the new ID should be returned in the item
 	 * @return \Aimeos\MAdmin\Cache\Item\Iface Cache item
 	 */
-	public function saveItem( \Aimeos\MAdmin\Cache\Item\Iface $item, $fetch = true )
+	public function saveItem( \Aimeos\MAdmin\Cache\Item\Iface $item, bool $fetch = true ) : \Aimeos\MAdmin\Cache\Item\Iface
 	{
 		if( $item->getId() === null ) {
 			throw new \Aimeos\MAdmin\Cache\Exception( 'ID is required for caching' );
@@ -105,7 +105,7 @@ class Redis
 	 * @param \Aimeos\MShop\Common\Item\Iface[]|string[] $itemIds List of item objects or IDs of the items
 	 * @return \Aimeos\MAdmin\Cache\Manager\Iface Manager object for chaining method calls
 	 */
-	public function deleteItems( array $itemIds )
+	public function deleteItems( array $itemIds ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		$this->getCache()->deleteMultiple( $itemIds );
 		return $this;
@@ -115,13 +115,13 @@ class Redis
 	/**
 	 * Creates the cache object for the given cache id.
 	 *
-	 * @param integer $id Cache ID to fetch cache object for
+	 * @param string $id Cache ID to fetch cache object for
 	 * @param array $ref List of domains to fetch list items and referenced items for
-	 * @param boolean $default Add default criteria
+	 * @param bool $default Add default criteria
 	 * @return \Aimeos\MAdmin\Cache\Item\Iface Returns the cache item of the given id
 	 * @throws \Aimeos\MAdmin\Cache\Exception If item couldn't be found
 	 */
-	public function getItem( $id, array $ref = [], $default = false )
+	public function getItem( string $id, array $ref = [], bool $default = false ) : \Aimeos\MShop\Common\Item\Iface
 	{
 		if( ( $value = $this->getCache()->get( $id ) ) === null ) {
 			throw new \Aimeos\MAdmin\Cache\Exception( sprintf( 'Item with ID "%1$s" not found', $id ) );
@@ -135,11 +135,11 @@ class Redis
 	 * Search for cache entries based on the given criteria.
 	 *
 	 * @param \Aimeos\MW\Criteria\Iface $search Search object containing the conditions
-	 * @param integer &$total Number of items that are available in total
-	 *
+	 * @param string[] $ref List of domains to fetch list items and referenced items for
+	 * @param int &$total Number of items that are available in total
 	 * @return array List of cache items implementing \Aimeos\MAdmin\Cache\Item\Iface
 	 */
-	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], &$total = null )
+	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], int &$total = null ) : array
 	{
 		/** Not available in a reasonable implemented way by Redis */
 		return [];
@@ -149,10 +149,10 @@ class Redis
 	/**
 	 * Returns the available manager types
 	 *
-	 * @param boolean $withsub Return also the resource type of sub-managers if true
+	 * @param bool $withsub Return also the resource type of sub-managers if true
 	 * @return array Type of the manager and submanagers, subtypes are separated by slashes
 	 */
-	public function getResourceType( $withsub = true )
+	public function getResourceType( bool $withsub = true ) : array
 	{
 		$path = 'madmin/cache/manager/submanagers';
 
@@ -163,10 +163,10 @@ class Redis
 	/**
 	 * Returns the attributes that can be used for searching.
 	 *
-	 * @param boolean $withsub Return also attributes of sub-managers if true
+	 * @param bool $withsub Return also attributes of sub-managers if true
 	 * @return array Returns a list of attribtes implementing \Aimeos\MW\Criteria\Attribute\Iface
 	 */
-	public function getSearchAttributes( $withsub = true )
+	public function getSearchAttributes( bool $withsub = true ) : array
 	{
 		$path = 'madmin/cache/manager/submanagers';
 
@@ -179,9 +179,9 @@ class Redis
 	 *
 	 * @param string $manager Name of the sub manager type in lower case
 	 * @param string|null $name Name of the implementation, will be from configuration (or Default) if null
-	 * @return mixed Manager for different extensions, e.g stock, tags, locations, etc.
+	 * @return \Aimeos\MShop\Common\Manager\Iface Manager for different extensions, e.g stock, tags, locations, etc.
 	 */
-	public function getSubManager( $manager, $name = null )
+	public function getSubManager( string $manager, string $name = null ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		return $this->getSubManagerBase( 'cache', $manager, $name );
 	}
@@ -193,7 +193,7 @@ class Redis
 	 * @param array $values Associative list of key/value pairs of a job
 	 * @return \Aimeos\MAdmin\Cache\Item\Iface
 	 */
-	protected function createItemBase( array $values = [] )
+	protected function createItemBase( array $values = [] ) : \Aimeos\MAdmin\Cache\Item\Iface
 	{
 		$values['siteid'] = $this->getContext()->getLocale()->getSiteId();
 
