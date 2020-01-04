@@ -16,7 +16,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	private $object;
 
 
-	protected function setUp()
+	protected function setUp() : void
 	{
 		$methods = array(
 			'del', 'execute', 'exists', 'expireat', 'flushdb', 'get',
@@ -28,7 +28,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	}
 
 
-	protected function tearDown()
+	protected function tearDown() : void
 	{
 		unset( $this->object, $this->mock );
 	}

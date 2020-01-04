@@ -15,14 +15,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	private $object;
 
 
-	protected function setUp()
+	protected function setUp() : void
 	{
 		$this->context = \TestHelper::getContext();
 		$this->object = new \Aimeos\MAdmin\Cache\Manager\Redis( $this->context );
 	}
 
 
-	protected function tearDown()
+	protected function tearDown() : void
 	{
 		$this->object = null;
 	}
@@ -30,13 +30,13 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testClear()
 	{
-		$this->object->clear( array( -1 ) );
+		$this->assertInstanceOf( \Aimeos\MAdmin\Cache\Manager\Iface::class, $this->object->clear( array( -1 ) ) );
 	}
 
 
 	public function testCreateItem()
 	{
-		$this->assertInstanceOf( '\\Aimeos\\MAdmin\\Cache\\Item\\Iface', $this->object->createItem() );
+		$this->assertInstanceOf( \Aimeos\MAdmin\Cache\Item\Iface::class, $this->object->createItem() );
 	}
 
 
@@ -50,7 +50,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetSubManager()
 	{
-		$this->setExpectedException('\\Aimeos\\MAdmin\\Exception');
+		$this->expectException('\\Aimeos\\MAdmin\\Exception');
 		$this->object->getSubManager( 'unknown' );
 	}
 
@@ -94,7 +94,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
-		$this->setExpectedException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
+		$this->expectException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
 		$mock->getItem( 'test' );
 	}
 
