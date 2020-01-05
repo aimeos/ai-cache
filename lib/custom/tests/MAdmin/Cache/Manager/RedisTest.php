@@ -43,14 +43,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testGetSearchAttributes()
 	{
 		foreach( $this->object->getSearchAttributes() as $attr ) {
-			$this->assertInstanceOf('\\Aimeos\\MW\\Criteria\\Attribute\\Iface', $attr );
+			$this->assertInstanceOf( '\\Aimeos\\MW\\Criteria\\Attribute\\Iface', $attr );
 		}
 	}
 
 
 	public function testGetSubManager()
 	{
-		$this->expectException('\\Aimeos\\MAdmin\\Exception');
+		$this->expectException( '\\Aimeos\\MAdmin\\Exception' );
 		$this->object->getSubManager( 'unknown' );
 	}
 

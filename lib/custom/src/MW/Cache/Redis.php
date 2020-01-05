@@ -163,7 +163,7 @@ class Redis
 		foreach( $this->client->mget( $actkeys ) as $idx => $value )
 		{
 			if( $value !== null && isset( $keys[$idx] ) ) {
-				$result[ $keys[$idx] ] = $value;
+				$result[$keys[$idx]] = $value;
 			}
 		}
 
@@ -247,7 +247,7 @@ class Redis
 		$pipe = $this->client->pipeline();
 
 		foreach( $pairs as $key => $value ) {
-			$actpairs[ $this->siteid . $key ] = $value;
+			$actpairs[$this->siteid . $key] = $value;
 		}
 
 		$pipe->mset( $actpairs );
