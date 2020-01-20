@@ -137,12 +137,12 @@ class Redis
 	 * @param \Aimeos\MW\Criteria\Iface $search Search object containing the conditions
 	 * @param string[] $ref List of domains to fetch list items and referenced items for
 	 * @param int &$total Number of items that are available in total
-	 * @return array List of cache items implementing \Aimeos\MAdmin\Cache\Item\Iface
+	 * @return \Aimeos\Map List of cache items implementing \Aimeos\MAdmin\Cache\Item\Iface
 	 */
-	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], int &$total = null ) : array
+	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], int &$total = null ) : \Aimeos\Map
 	{
 		/** Not available in a reasonable implemented way by Redis */
-		return [];
+		return new \Aimeos\Map();
 	}
 
 
