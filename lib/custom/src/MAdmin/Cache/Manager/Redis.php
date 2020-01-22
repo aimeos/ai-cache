@@ -142,7 +142,7 @@ class Redis
 	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], int &$total = null ) : \Aimeos\Map
 	{
 		/** Not available in a reasonable implemented way by Redis */
-		return new \Aimeos\Map();
+		return map();
 	}
 
 
