@@ -23,7 +23,6 @@ class Redis
 	implements \Aimeos\MW\Cache\Iface
 {
 	private $client;
-	private $siteid;
 
 
 	/**
@@ -35,7 +34,6 @@ class Redis
 	public function __construct( array $config, \Predis\Client $client )
 	{
 		$this->client = $client;
-		$this->siteid = ( isset( $config['siteid'] ) ? $config['siteid'] . '-' : null );
 
 		if( isset( $config['auth'] ) && !$this->client->auth( $config['auth'] ) ) {
 			throw new \Aimeos\MW\Cache\Exception( 'Authentication failed for Redis' );
@@ -77,10 +75,6 @@ class Redis
 			return true;
 		}
 
-		foreach( $keys as $idx => $key ) {
-			$keys[$idx] = $this->siteid . $key;
-		}
-
 		return $this->client->del( $keys ) === 'OK' ? true : false;
 	}
 
@@ -105,7 +99,7 @@ class Redis
 
 		foreach( $tags as $tag )
 		{
-			$tag = $this->siteid . 'tag:' . $tag;
+			$tag = 'tag:' . $tag;
 			$pipe->smembers( $tag );
 			$tagKeys[] = $tag;
 		}
@@ -134,7 +128,7 @@ class Redis
 	 */
 	public function get( string $key, $default = null )
 	{
-		if( ( $result = $this->client->get( $this->siteid . $key ) ) === null ) {
+		if( ( $result = $this->client->get( $key ) ) === null ) {
 			return $default;
 		}
 
@@ -157,7 +151,7 @@ class Redis
 		$result = $actkeys = [];
 
 		foreach( $keys as $idx => $key ) {
-			$actkeys[$idx] = $this->siteid . $key;
+			$actkeys[$idx] = $key;
 		}
 
 		foreach( $this->client->mget( $actkeys ) as $idx => $value )
@@ -209,12 +203,11 @@ class Redis
 	 */
 	public function set( string $key, $value, $expires = null, iterable $tags = [] ) : bool
 	{
-		$key = $this->siteid . $key;
 		$pipe = $this->client->pipeline();
 		$pipe->set( $key, $value );
 
 		foreach( $tags as $tag ) {
-			$pipe->sadd( $this->siteid . 'tag:' . $tag, $key );
+			$pipe->sadd( 'tag:' . $tag, $key );
 		}
 
 		if( is_string( $expires ) ) {
@@ -243,30 +236,24 @@ class Redis
 	 */
 	public function setMultiple( iterable $pairs, $expires = null, iterable $tags = [] ) : bool
 	{
-		$actpairs = [];
 		$pipe = $this->client->pipeline();
-
-		foreach( $pairs as $key => $value ) {
-			$actpairs[$this->siteid . $key] = $value;
-		}
-
-		$pipe->mset( $actpairs );
+		$pipe->mset( $pairs );
 
 		foreach( $pairs as $key => $value )
 		{
 			if( $expires instanceof \DateInterval ) {
-				$pipe->expireat( $this->siteid . $key, date_create()->add( $expires )->getTimestamp() );
+				$pipe->expireat( $key, date_create()->add( $expires )->getTimestamp() );
 			} elseif( is_string( $expires ) ) {
-				$pipe->expireat( $this->siteid . $key, date_create( $expires )->getTimestamp() );
+				$pipe->expireat( $key, date_create( $expires )->getTimestamp() );
 			} elseif( is_int( $expires ) ) {
-				$pipe->expire( $this->siteid . $key, $expires );
+				$pipe->expire( $key, $expires );
 			}
 		}
 
 		foreach( $tags as $key => $tagList )
 		{
 			foreach( (array) $tagList as $tag ) {
-				$pipe->sadd( $this->siteid . 'tag:' . $tag, $this->siteid . $key );
+				$pipe->sadd( 'tag:' . $tag, $key );
 			}
 		}
 

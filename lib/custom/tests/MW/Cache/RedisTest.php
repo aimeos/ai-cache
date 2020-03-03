@@ -24,7 +24,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		);
 
 		$this->mock = $this->getMockBuilder( '\\Predis\\Client' )->setMethods( $methods )->getMock();
-		$this->object = new \Aimeos\MW\Cache\Redis( array( 'siteid' => 1 ), $this->mock );
+		$this->object = new \Aimeos\MW\Cache\Redis( [], $this->mock );
 	}
 
 
@@ -44,7 +44,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testDelete()
 	{
 		$this->mock->expects( $this->once() )->method( 'del' )->will( $this->returnValue( 'OK' ) )
-			->with( $this->equalTo( array( '1-test' ) ) );
+			->with( $this->equalTo( array( 'test' ) ) );
 
 		$this->assertTrue( $this->object->delete( 'test' ) );
 	}
@@ -53,7 +53,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testDeleteMultiple()
 	{
 		$this->mock->expects( $this->once() )->method( 'del' )->will( $this->returnValue( 'OK' ) )
-			->with( $this->equalTo( array( '1-test' ) ) );
+			->with( $this->equalTo( array( 'test' ) ) );
 
 		$this->assertTrue( $this->object->deleteMultiple( array( 'test' ) ) );
 	}
@@ -67,10 +67,10 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'smembers' );
 
 		$this->mock->expects( $this->once() )->method( 'execute' )
-			->will( $this->returnValue( array( '1-tag:1' => array( '1-key:1', '1-key:2' ) ) ) );
+			->will( $this->returnValue( array( 'tag:1' => array( 'key:1', 'key:2' ) ) ) );
 
 		$this->mock->expects( $this->once() )->method( 'del' )->will( $this->returnValue( 'OK' ) )
-			->with( $this->equalTo( array( '1-key:1', '1-key:2', '1-tag:tag1', '1-tag:tag2' ) ) );
+			->with( $this->equalTo( array( 'key:1', 'key:2', 'tag:tag1', 'tag:tag2' ) ) );
 
 		$this->assertTrue( $this->object->deleteByTags( array( 'tag1', 'tag2' ) ) );
 	}
@@ -123,14 +123,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 			->will( $this->returnValue( $this->mock ) );
 
 		$this->mock->expects( $this->once() )->method( 'set' )
-			->with( $this->equalTo( '1-t:1' ), $this->equalTo( 'test 1' ) );
+			->with( $this->equalTo( 't:1' ), $this->equalTo( 'test 1' ) );
 
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'sadd' );
 
 		$this->mock->expects( $this->once() )->method( 'execute' )->will( $this->returnValue( 'OK' ) );
 
 		$this->mock->expects( $this->once() )->method( 'expireat' )
-			->with( $this->equalTo( '1-t:1' ), $this->greaterThan( 0 ) );
+			->with( $this->equalTo( 't:1' ), $this->greaterThan( 0 ) );
 
 		$this->assertTrue( $this->object->set( 't:1', 'test 1', '2000-01-01 00:00:00', ['tag1', 'tag2'] ) );
 	}
@@ -142,14 +142,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 			->will( $this->returnValue( $this->mock ) );
 
 		$this->mock->expects( $this->once() )->method( 'mset' )
-			->with( $this->equalTo( array( '1-t:1' => 'test 1' ) ) );
+			->with( $this->equalTo( array( 't:1' => 'test 1' ) ) );
 
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'sadd' );
 
 		$this->mock->expects( $this->once() )->method( 'execute' )->will( $this->returnValue( 'OK' ) );
 
 		$this->mock->expects( $this->once() )->method( 'expireat' )
-			->with( $this->equalTo( '1-t:1' ), $this->greaterThan( 0 ) );
+			->with( $this->equalTo( 't:1' ), $this->greaterThan( 0 ) );
 
 		$this->assertTrue( $this->object->setMultiple( ['t:1' => 'test 1'], '2000-01-01 00:00:00', ['tag1', 'tag2'] ) );
 	}
