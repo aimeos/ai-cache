@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 10:00+0200\n"
+"POT-Creation-Date: 2020-04-02 13:58+0200\n"
 "PO-Revision-Date: 2017-09-14 09:25+0000\n"
 "Language-Team: Vietnamese (https://www.transifex.com/aimeos/teams/39015/vi/)\n"
 "Language: vi\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/MAdmin/Cache/Manager/Redis.php:123
+#: src/MAdmin/Cache/Manager/Redis.php:127
 #, php-format
 msgid "Item with ID \"%1$s\" not found"
 msgstr ""
