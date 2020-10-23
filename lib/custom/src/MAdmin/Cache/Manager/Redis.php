@@ -139,7 +139,7 @@ class Redis
 	 * @param int &$total Number of items that are available in total
 	 * @return \Aimeos\Map List of cache items implementing \Aimeos\MAdmin\Cache\Item\Iface
 	 */
-	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], int &$total = null ) : \Aimeos\Map
+	public function search( \Aimeos\MW\Criteria\Iface $search, array $ref = [], int &$total = null ) : \Aimeos\Map
 	{
 		/** Not available in a reasonable implemented way by Redis */
 		return map();
