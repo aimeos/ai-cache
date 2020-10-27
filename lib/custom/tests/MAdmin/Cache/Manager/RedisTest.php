@@ -78,7 +78,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
-		$this->assertInstanceOf( '\\Aimeos\\MAdmin\\Cache\\Item\\Iface', $mock->getItem( 'test' ) );
+		$this->assertInstanceOf( '\\Aimeos\\MAdmin\\Cache\\Item\\Iface', $mock->get( 'test' ) );
 	}
 
 
@@ -95,7 +95,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
 		$this->expectException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
-		$mock->getItem( 'test' );
+		$mock->get( 'test' );
 	}
 
 
