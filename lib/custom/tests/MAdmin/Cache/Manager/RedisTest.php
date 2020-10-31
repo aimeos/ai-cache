@@ -57,7 +57,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testSearchItems()
 	{
-		$search = $this->object->createSearch();
+		$search = $this->object->filter();
 		$search->setConditions( $search->compare( '==', 'cache.id', 'unittest' ) );
 
 		$this->assertEquals( [], $this->object->search( $search )->toArray() );
