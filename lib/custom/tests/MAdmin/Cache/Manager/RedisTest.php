@@ -36,7 +36,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testCreateItem()
 	{
-		$this->assertInstanceOf( \Aimeos\MAdmin\Cache\Item\Iface::class, $this->object->createItem() );
+		$this->assertInstanceOf( \Aimeos\MAdmin\Cache\Item\Iface::class, $this->object->create() );
 	}
 
 
@@ -114,7 +114,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
-		$item = $mock->createItem();
+		$item = $mock->create();
 		$item->setId( 'test' );
 
 		$mock->saveItem( $item );
