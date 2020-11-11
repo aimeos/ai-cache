@@ -131,7 +131,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
-		$mock->deleteItems( [] );
+		$mock->delete( [] );
 	}
 
 
