@@ -117,7 +117,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$item = $mock->create();
 		$item->setId( 'test' );
 
-		$mock->saveItem( $item );
+		$mock->save( $item );
 	}
 
 
