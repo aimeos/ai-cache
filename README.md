@@ -2,9 +2,9 @@
     <img src="https://aimeos.org/fileadmin/template/icons/logo.png" alt="Aimeos logo" title="Aimeos" align="right" height="60" />
 </a>
 
-Aimeos cache extension
-======================
-[![Build Status](https://travis-ci.org/aimeos/ai-cache.svg?branch=master)](https://travis-ci.org/aimeos/ai-cache)
+# Aimeos cache extension
+
+[![Build Status](https://circleci.com/gh/aimeos/ai-cache.svg?style=shield)](https://circleci.com/gh/aimeos/ai-cache)
 [![Coverage Status](https://coveralls.io/repos/aimeos/ai-cache/badge.svg?branch=master)](https://coveralls.io/r/aimeos/ai-cache?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/aimeos/ai-cache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/aimeos/ai-cache/?branch=master)
 [![License](https://poser.pugx.org/aimeos/ai-cache/license.svg)](https://packagist.org/packages/aimeos/ai-cache)
@@ -22,29 +22,18 @@ The Aimeos cache extension contains alternative cache implementations to the dat
 ## Installation
 
 As every Aimeos extension, the easiest way is to install it via [composer](https://getcomposer.org/). If you don't have composer installed yet, you can execute this string on the command line to download it:
+
 ```
 php -r "readfile('https://getcomposer.org/installer');" | php -- --filename=composer
 ```
 
-Add the cache extension name to the "require" section of your ```composer.json``` (or your ```composer.aimeos.json```, depending on what is available) file:
+To add the extionsion to your composer-based installation, execute:
+
 ```
-"require": [
-    "aimeos/ai-cache": "dev-master",
-    ...
-],
+composer req "aimeos/ai-cache"
 ```
 
-Afterwards you only need to execute the composer update command on the command line:
-```
-composer update
-```
-
-If your composer file is named "aimeos.composer.json", you must use this:
-```
-COMPOSER=composer.aimeos.json composer update
-```
-
-These commands will install the Aimeos extension into the extension directory and it will be available immediately.
+These command will install the Aimeos extension into the extension directory and it will be available immediately.
 
 ## Configuration
 

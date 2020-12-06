@@ -1,3 +1,0 @@
-src_dir: ext/ai-cache
-json_path: ext/ai-cache/coveralls.json
-coverage_clover: ext/ai-cache/lib/custom/tests/coverage.xml
