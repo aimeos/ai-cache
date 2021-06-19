@@ -1,14 +1,14 @@
 <?php
 
-return array(
+return [
 	'name' => 'ai-cache',
-	'depends' => array(
+	'depends' => [
 		'aimeos-core',
-	),
-	'include' => array(
+	],
+	'include' => [
 		'lib/custom/src',
-	),
-	'i18n' => array(
+	],
+	'i18n' => [
 		'custom' => 'lib/custom/i18n',
-	),
-);
+	],
+];
