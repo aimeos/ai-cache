@@ -17,7 +17,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	protected function setUp() : void
 	{
-		$this->context = \TestHelper::getContext();
+		$this->context = \TestHelper::context();
 		$this->object = new \Aimeos\MAdmin\Cache\Manager\Redis( $this->context );
 	}
 
@@ -66,7 +66,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetItem()
 	{
-		$context = \TestHelper::getContext();
+		$context = \TestHelper::context();
 
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
@@ -84,7 +84,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetItemException()
 	{
-		$context = \TestHelper::getContext();
+		$context = \TestHelper::context();
 
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
@@ -101,7 +101,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testSaveItem()
 	{
-		$context = \TestHelper::getContext();
+		$context = \TestHelper::context();
 
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'delete', 'set' ) )->getMock();

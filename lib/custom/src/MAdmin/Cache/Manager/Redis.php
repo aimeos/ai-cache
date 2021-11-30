@@ -43,7 +43,7 @@ class Redis
 	{
 		if( !isset( $this->object ) )
 		{
-			$context = $this->getContext();
+			$context = $this->context();
 			$config = $context->getConfig();
 
 			$conn = $config->get( 'resource/cache/redis/connection' );
@@ -195,7 +195,7 @@ class Redis
 	 */
 	protected function createItemBase( array $values = [] ) : \Aimeos\MAdmin\Cache\Item\Iface
 	{
-		$values['siteid'] = $this->getContext()->getLocale()->getSiteId();
+		$values['siteid'] = $this->context()->getLocale()->getSiteId();
 
 		return new \Aimeos\MAdmin\Cache\Item\Standard( $values );
 	}
