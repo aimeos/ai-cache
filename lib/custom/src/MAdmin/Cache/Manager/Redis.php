@@ -44,7 +44,7 @@ class Redis
 		if( !isset( $this->object ) )
 		{
 			$context = $this->context();
-			$config = $context->getConfig();
+			$config = $context->config();
 
 			$conn = $config->get( 'resource/cache/redis/connection' );
 			$conf = $config->get( 'resource/cache/redis', [] );
