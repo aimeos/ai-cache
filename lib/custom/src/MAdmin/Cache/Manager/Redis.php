@@ -54,7 +54,7 @@ class Redis
 			}
 
 			$client = new \Predis\Client( $conn, $conf );
-			$conf = array( 'siteid' => $context->getLocale()->getSiteId() );
+			$conf = array( 'siteid' => $context->locale()->getSiteId() );
 
 			$this->object = \Aimeos\MW\Cache\Factory::create( 'Redis', $conf, $client );
 		}
@@ -195,7 +195,7 @@ class Redis
 	 */
 	protected function createItemBase( array $values = [] ) : \Aimeos\MAdmin\Cache\Item\Iface
 	{
-		$values['siteid'] = $this->context()->getLocale()->getSiteId();
+		$values['siteid'] = $this->context()->locale()->getSiteId();
 
 		return new \Aimeos\MAdmin\Cache\Item\Standard( $values );
 	}
