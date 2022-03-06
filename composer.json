@@ -1,6 +1,6 @@
 {
 	"name": "aimeos/ai-cache",
-	"description": "Cache extension for Aimeos web shops and e-commerce solutions",
+	"description": "Cache extension for Aimeos e-commerce solutions",
 	"keywords": ["aimeos", "cache", "extension", "shop", "e-commerce"],
 	"homepage": "https://aimeos.org",
 	"type": "aimeos-extension",
@@ -23,11 +23,18 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Aimeos\\MAdmin\\": "lib/custom/src/MAdmin",
-			"Aimeos\\MW\\": "lib/custom/src/MW"
+			"Aimeos\\": "src"
 		},
 		"classmap": [
-			"lib/custom/src"
+			"src"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Aimeos\\": "tests"
+		},
+		"classmap": [
+			"tests"
 		]
 	}
 }

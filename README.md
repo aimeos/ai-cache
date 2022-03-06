@@ -41,17 +41,17 @@ The ways of adding the required resource configuration depends on the software y
 
 **Laravel** (in config/shop.php):
 ```
-return array(
+return [
     ...
-    'resource' => array(
+    'resource' => [
         ...
-        'cache' => array(
-            '<name>' => array(
+        'cache' => [
+            '<name>' => [
                 ...
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
 ```
 
 **Symfony** (in app/config/config.yml):
@@ -66,7 +66,7 @@ aimeos_shop:
 **TYPO3** (via TypoScript in the setup template):
 ```
 plugin.tx_aimeos.settings.resource.cache {
-    <name>: {
+    <name> {
         ...
     }
 }
@@ -92,7 +92,7 @@ aimeos_shop:
 **TYPO3**:
 ```
 plugin.tx_aimeos.settings.resource.cache {
-    redis: {
+    redis {
         scheme = tcp
         host = 10.0.0.1
         port = 6379
