@@ -29,7 +29,7 @@ class Redis
 			'internalcode' => '"id"',
 			'label' => 'Cache ID',
 			'type' => 'string',
-			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_STR,
+			'internaltype' => \Aimeos\Base\DB\Statement\Base::PARAM_STR,
 		),
 	);
 

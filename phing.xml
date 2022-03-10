@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Aimeos cache extensions" default="test">
+<project name="ai-cache extension" default="test">
 
 	<target name="test" description="Executes unit tests" depends="clean">
 		<echo msg="Executing unit tests" />
