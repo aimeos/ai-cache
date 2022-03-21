@@ -29,7 +29,7 @@ class Redis
 	 * Initializes the object instance.
 	 *
 	 * @param array $config Configuration for Predis client if instance should be created
-	 * @param Predis\Client $client Predis client instance
+	 * @param \Predis\Client $client Predis client instance
 	 */
 	public function __construct( array $config, \Predis\Client $client )
 	{
