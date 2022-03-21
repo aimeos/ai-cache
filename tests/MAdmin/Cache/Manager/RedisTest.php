@@ -68,7 +68,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	{
 		$context = \TestHelper::context();
 
-		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
+		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
 
 		$mockRedis->expects( $this->once() )->method( 'get' )->will( $this->returnValue( 'test value' ) );
@@ -86,7 +86,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	{
 		$context = \TestHelper::context();
 
-		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
+		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
@@ -103,7 +103,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	{
 		$context = \TestHelper::context();
 
-		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
+		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'delete', 'set' ) )->getMock();
 
 		$mockRedis->expects( $this->once() )->method( 'delete' );
@@ -123,7 +123,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testDeleteItems()
 	{
-		$mockRedis = $this->getMockBuilder( '\\Aimeos\\MW\\Cache\\Redis' )
+		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
 			->disableOriginalConstructor()->setMethods( array( 'deleteMultiple' ) )->getMock();
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
@@ -138,7 +138,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testGetCache()
 	{
 		try {
-			$this->assertInstanceOf( '\\Aimeos\\MW\\Cache\\Iface', $this->object->getCache() );
+			$this->assertInstanceOf( '\\Aimeos\\Base\\Cache\\Iface', $this->object->getCache() );
 		} catch( \Aimeos\MAdmin\Cache\Exception $e ) {
 			$this->markTestSkipped( 'Please install Predis client first' );
 		}

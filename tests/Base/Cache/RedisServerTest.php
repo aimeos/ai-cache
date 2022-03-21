@@ -1,10 +1,10 @@
 <?php
 
-namespace Aimeos\MW\Cache;
+namespace Aimeos\Base\Cache;
 
 
 /**
- * Real test against server for class \Aimeos\MW\Cache\Redis.
+ * Real test against server for class \Aimeos\Base\Cache\Redis.
  *
  * @license LGPLv3, http://www.gnu.org/licenses/lgpl.html
  * @copyright Metaways Infosystems GmbH, 2014
@@ -22,7 +22,7 @@ class RedisServerTest extends \PHPUnit\Framework\TestCase
 		{
 			$predis = new \Predis\Client();
 
-			$client = new \Aimeos\MW\Cache\Redis( [], $predis );
+			$client = new \Aimeos\Base\Cache\Redis( [], $predis );
 			$client->clear();
 		}
 		catch( \Exception $e )

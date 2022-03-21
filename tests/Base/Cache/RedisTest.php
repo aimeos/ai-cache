@@ -7,7 +7,7 @@
  */
 
 
-namespace Aimeos\MW\Cache;
+namespace Aimeos\Base\Cache;
 
 
 class RedisTest extends \PHPUnit\Framework\TestCase
@@ -24,7 +24,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		);
 
 		$this->mock = $this->getMockBuilder( '\\Predis\\Client' )->setMethods( $methods )->getMock();
-		$this->object = new \Aimeos\MW\Cache\Redis( [], $this->mock );
+		$this->object = new \Aimeos\Base\Cache\Redis( [], $this->mock );
 	}
 
 

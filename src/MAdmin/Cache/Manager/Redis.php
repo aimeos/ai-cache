@@ -37,9 +37,9 @@ class Redis
 	/**
 	 * Returns the cache object
 	 *
-	 * @return \Aimeos\MW\Cache\Iface Cache object
+	 * @return \Aimeos\Base\Cache\Iface Cache object
 	 */
-	public function getCache() : \Aimeos\MW\Cache\Iface
+	public function getCache() : \Aimeos\Base\Cache\Iface
 	{
 		if( !isset( $this->object ) )
 		{
@@ -56,7 +56,7 @@ class Redis
 			$client = new \Predis\Client( $conn, $conf );
 			$conf = array( 'siteid' => $context->locale()->getSiteId() );
 
-			$this->object = \Aimeos\MW\Cache\Factory::create( 'Redis', $conf, $client );
+			$this->object = \Aimeos\Base\Cache\Factory::create( 'Redis', $conf, $client );
 		}
 
 		return $this->object;
