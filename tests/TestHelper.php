@@ -79,7 +79,7 @@ class TestHelper
 
 		$ctx->setLocale( $localeItem );
 
-		$ctx->setEditor( 'ai-cache:lib/custom' );
+		$ctx->setEditor( 'ai-cache' );
 
 		return $ctx;
 	}
