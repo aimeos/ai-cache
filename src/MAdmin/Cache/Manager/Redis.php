@@ -80,7 +80,7 @@ class Redis
 	 * @param bool $fetch True if the new ID should be returned in the item
 	 * @return \Aimeos\MAdmin\Cache\Item\Iface Cache item
 	 */
-	public function saveItem( \Aimeos\MAdmin\Cache\Item\Iface $item, bool $fetch = true ) : \Aimeos\MAdmin\Cache\Item\Iface
+	protected function saveItem( \Aimeos\MAdmin\Cache\Item\Iface $item, bool $fetch = true ) : \Aimeos\MAdmin\Cache\Item\Iface
 	{
 		if( $item->getId() === null ) {
 			throw new \Aimeos\MAdmin\Cache\Exception( 'ID is required for caching' );
