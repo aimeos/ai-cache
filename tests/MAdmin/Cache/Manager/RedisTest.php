@@ -12,6 +12,7 @@ namespace Aimeos\MAdmin\Cache\Manager;
 
 class RedisTest extends \PHPUnit\Framework\TestCase
 {
+	private $context;
 	private $object;
 
 
@@ -24,7 +25,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	protected function tearDown() : void
 	{
-		$this->object = null;
+		unset( $this->object, $this->context );
 	}
 
 
@@ -50,7 +51,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetSubManager()
 	{
-		$this->expectException( '\\Aimeos\\MAdmin\\Exception' );
+		$this->expectException( \LogicException::class );
 		$this->object->getSubManager( 'unknown' );
 	}
 
