@@ -70,12 +70,12 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$context = \TestHelper::context();
 
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
-			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
+			->disableOriginalConstructor()->onlyMethods( array( 'get' ) )->getMock();
 
 		$mockRedis->expects( $this->once() )->method( 'get' )->will( $this->returnValue( 'test value' ) );
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
-			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
+			->setConstructorArgs( array( $context ) )->onlyMethods( array( 'getCache' ) )->getMock();
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
@@ -88,10 +88,10 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$context = \TestHelper::context();
 
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
-			->disableOriginalConstructor()->setMethods( array( 'get' ) )->getMock();
+			->disableOriginalConstructor()->onlyMethods( array( 'get' ) )->getMock();
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
-			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
+			->setConstructorArgs( array( $context ) )->onlyMethods( array( 'getCache' ) )->getMock();
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
@@ -105,13 +105,13 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$context = \TestHelper::context();
 
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
-			->disableOriginalConstructor()->setMethods( array( 'delete', 'set' ) )->getMock();
+			->disableOriginalConstructor()->onlyMethods( array( 'delete', 'set' ) )->getMock();
 
 		$mockRedis->expects( $this->once() )->method( 'delete' );
 		$mockRedis->expects( $this->once() )->method( 'set' );
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
-			->setConstructorArgs( array( $context ) )->setMethods( array( 'getCache' ) )->getMock();
+			->setConstructorArgs( array( $context ) )->onlyMethods( array( 'getCache' ) )->getMock();
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 
@@ -125,10 +125,10 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testDeleteItems()
 	{
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
-			->disableOriginalConstructor()->setMethods( array( 'deleteMultiple' ) )->getMock();
+			->disableOriginalConstructor()->onlyMethods( array( 'deleteMultiple' ) )->getMock();
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
-			->disableOriginalConstructor()->setMethods( array( 'getCache' ) )->getMock();
+			->disableOriginalConstructor()->onlyMethods( array( 'getCache' ) )->getMock();
 
 		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
 

@@ -20,10 +20,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	{
 		$methods = array(
 			'del', 'execute', 'exists', 'expireat', 'flushdb', 'get',
-			'mget', 'mset', 'pipeline', 'sadd', 'set', 'smembers'
+			'mget', 'mset', 'sadd', 'set', 'smembers'
 		);
 
-		$this->mock = $this->getMockBuilder( '\\Predis\\Client' )->setMethods( $methods )->getMock();
+		$this->mock = $this->getMockBuilder( '\\Predis\\Client' )
+			->onlyMethods( ['pipeline'] )
+			->addMethods( $methods )
+			->getMock();
+
 		$this->object = new \Aimeos\Base\Cache\Redis( [], $this->mock );
 	}
 
