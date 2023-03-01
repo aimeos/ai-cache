@@ -22,7 +22,7 @@ class Redis
 	extends \Aimeos\Base\Cache\Base
 	implements \Aimeos\Base\Cache\Iface
 {
-	private $client;
+	private \Predis\Client $client;
 
 
 	/**

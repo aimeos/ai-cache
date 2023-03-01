@@ -22,8 +22,8 @@ class Redis
 	extends \Aimeos\MAdmin\Common\Manager\Base
 	implements \Aimeos\MAdmin\Cache\Manager\Iface
 {
-	private $object;
-	private $searchConfig = array(
+	private ?\Aimeos\Base\Cache\Iface $object = null;
+	private array $searchConfig = array(
 		'cache.id' => array(
 			'code' => 'cache.id',
 			'internalcode' => '"id"',
