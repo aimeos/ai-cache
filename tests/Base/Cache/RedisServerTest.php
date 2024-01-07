@@ -8,7 +8,7 @@ namespace Aimeos\Base\Cache;
  *
  * @license LGPLv3, http://www.gnu.org/licenses/lgpl.html
  * @copyright Metaways Infosystems GmbH, 2014
- * @copyright Aimeos (aimeos.org), 2015-2023
+ * @copyright Aimeos (aimeos.org), 2015-2024
  */
 class RedisServerTest extends \PHPUnit\Framework\TestCase
 {
