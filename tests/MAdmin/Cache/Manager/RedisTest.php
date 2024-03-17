@@ -72,12 +72,12 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
 			->disableOriginalConstructor()->onlyMethods( array( 'get' ) )->getMock();
 
-		$mockRedis->expects( $this->once() )->method( 'get' )->will( $this->returnValue( 'test value' ) );
+		$mockRedis->expects( $this->once() )->method( 'get' )->willReturn( 'test value' );
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->setConstructorArgs( array( $context ) )->onlyMethods( array( 'getCache' ) )->getMock();
 
-		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
+		$mock->expects( $this->once() )->method( 'getCache' )->willReturn( $mockRedis );
 
 		$this->assertInstanceOf( '\\Aimeos\\MAdmin\\Cache\\Item\\Iface', $mock->get( 'test' ) );
 	}
@@ -93,7 +93,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->setConstructorArgs( array( $context ) )->onlyMethods( array( 'getCache' ) )->getMock();
 
-		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
+		$mock->expects( $this->once() )->method( 'getCache' )->willReturn( $mockRedis );
 
 		$this->expectException( '\\Aimeos\\MAdmin\\Cache\\Exception' );
 		$mock->get( 'test' );
@@ -113,7 +113,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->setConstructorArgs( array( $context ) )->onlyMethods( array( 'getCache' ) )->getMock();
 
-		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
+		$mock->expects( $this->once() )->method( 'getCache' )->willReturn( $mockRedis );
 
 		$item = $mock->create();
 		$item->setId( 'test' );
@@ -130,7 +130,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->disableOriginalConstructor()->onlyMethods( array( 'getCache' ) )->getMock();
 
-		$mock->expects( $this->once() )->method( 'getCache' )->will( $this->returnValue( $mockRedis ) );
+		$mock->expects( $this->once() )->method( 'getCache' )->willReturn( $mockRedis );
 
 		$mock->delete( [] );
 	}

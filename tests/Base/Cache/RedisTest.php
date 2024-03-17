@@ -40,14 +40,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testClear()
 	{
-		$this->mock->expects( $this->once() )->method( 'flushdb' )->will( $this->returnValue( 'OK' ) );
+		$this->mock->expects( $this->once() )->method( 'flushdb' )->willReturn( 'OK' );
 		$this->assertTrue( $this->object->clear() );
 	}
 
 
 	public function testDelete()
 	{
-		$this->mock->expects( $this->once() )->method( 'del' )->will( $this->returnValue( 'OK' ) )
+		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 'OK' )
 			->with( $this->equalTo( array( 'test' ) ) );
 
 		$this->assertTrue( $this->object->delete( 'test' ) );
@@ -56,7 +56,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testDeleteMultiple()
 	{
-		$this->mock->expects( $this->once() )->method( 'del' )->will( $this->returnValue( 'OK' ) )
+		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 'OK' )
 			->with( $this->equalTo( array( 'test' ) ) );
 
 		$this->assertTrue( $this->object->deleteMultiple( array( 'test' ) ) );
@@ -66,14 +66,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testDeleteByTags()
 	{
 		$this->mock->expects( $this->once() )->method( 'pipeline' )
-			->will( $this->returnValue( $this->mock ) );
+			->willReturn( $this->mock );
 
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'smembers' );
 
 		$this->mock->expects( $this->once() )->method( 'execute' )
-			->will( $this->returnValue( array( 'tag:1' => array( 'key:1', 'key:2' ) ) ) );
+			->willReturn( array( 'tag:1' => array( 'key:1', 'key:2' ) ) );
 
-		$this->mock->expects( $this->once() )->method( 'del' )->will( $this->returnValue( 'OK' ) )
+		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 'OK' )
 			->with( $this->equalTo( array( 'key:1', 'key:2', 'tag:tag1', 'tag:tag2' ) ) );
 
 		$this->assertTrue( $this->object->deleteByTags( array( 'tag1', 'tag2' ) ) );
@@ -83,7 +83,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testGet()
 	{
 		$this->mock->expects( $this->once() )->method( 'get' )
-			->will( $this->returnValue( 'test' ) );
+			->willReturn( 'test' );
 
 		$this->assertEquals( 'test', $this->object->get( 't:1' ) );
 	}
@@ -108,7 +108,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testGetMultiple()
 	{
 		$this->mock->expects( $this->once() )->method( 'mget' )
-			->will( $this->returnValue( array( 0 => 'test' ) ) );
+			->willReturn( array( 0 => 'test' ) );
 
 		$this->assertEquals( array( 't:1' => 'test' ), $this->object->getMultiple( array( 't:1' ) ) );
 	}
@@ -116,7 +116,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testHas()
 	{
-		$this->mock->expects( $this->once() )->method( 'exists' )->will( $this->returnValue( 1 ) );
+		$this->mock->expects( $this->once() )->method( 'exists' )->willReturn( 1 );
 		$this->assertTrue( $this->object->has( 'key' ) );
 	}
 
@@ -124,14 +124,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testSet()
 	{
 		$this->mock->expects( $this->once() )->method( 'pipeline' )
-			->will( $this->returnValue( $this->mock ) );
+			->willReturn( $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'set' )
 			->with( $this->equalTo( 't:1' ), $this->equalTo( 'test 1' ) );
 
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'sadd' );
 
-		$this->mock->expects( $this->once() )->method( 'execute' )->will( $this->returnValue( 'OK' ) );
+		$this->mock->expects( $this->once() )->method( 'execute' )->willReturn( 'OK' );
 
 		$this->mock->expects( $this->once() )->method( 'expireat' )
 			->with( $this->equalTo( 't:1' ), $this->greaterThan( 0 ) );
@@ -143,14 +143,14 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	public function testSetMultiple()
 	{
 		$this->mock->expects( $this->once() )->method( 'pipeline' )
-			->will( $this->returnValue( $this->mock ) );
+			->willReturn( $this->mock );
 
 		$this->mock->expects( $this->once() )->method( 'mset' )
 			->with( $this->equalTo( array( 't:1' => 'test 1' ) ) );
 
 		$this->mock->expects( $this->exactly( 2 ) )->method( 'sadd' );
 
-		$this->mock->expects( $this->once() )->method( 'execute' )->will( $this->returnValue( 'OK' ) );
+		$this->mock->expects( $this->once() )->method( 'execute' )->willReturn( 'OK' );
 
 		$this->mock->expects( $this->once() )->method( 'expireat' )
 			->with( $this->equalTo( 't:1' ), $this->greaterThan( 0 ) );
