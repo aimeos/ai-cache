@@ -2,7 +2,7 @@
 
 /**
  * @license LGPLv3, http://www.gnu.org/licenses/lgpl.html
- * @copyright Aimeos (aimeos.org), 2015-2024
+ * @copyright Aimeos (aimeos.org), 2015-2025
  */
 
 class TestHelper
