@@ -75,7 +75,7 @@ class Redis
 			return true;
 		}
 
-		return $this->client->del( $keys ) === 'OK' ? true : false;
+		return (int) $this->client->del( $keys ) > 0 ? true : false;
 	}
 
 
@@ -111,7 +111,7 @@ class Redis
 			}
 		}
 
-		return $this->client->del( array_merge( array_keys( $result ), $tagKeys ) ) === 'OK' ? true : false;
+		return (int) $this->client->del( array_merge( array_keys( $result ), $tagKeys ) ) > 0 ? true : false;
 	}
 
 
@@ -183,7 +183,7 @@ class Redis
 	 */
 	public function has( string $key ) : bool
 	{
-		return (bool) $this->client->exists();
+		return (bool) $this->client->exists( $key );
 	}
 
 

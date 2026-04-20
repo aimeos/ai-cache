@@ -15,7 +15,7 @@
 	"minimum-stability": "dev",
 	"require": {
 		"php": "^8.0.11",
-		"predis/predis": "~1.0",
+		"predis/predis": "~2.0",
 		"aimeos/aimeos-core": "dev-master"
 	},
 	"require-dev": {

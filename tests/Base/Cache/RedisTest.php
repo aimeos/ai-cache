@@ -47,7 +47,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testDelete()
 	{
-		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 'OK' )
+		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 1 )
 			->with( $this->equalTo( array( 'test' ) ) );
 
 		$this->assertTrue( $this->object->delete( 'test' ) );
@@ -56,7 +56,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	public function testDeleteMultiple()
 	{
-		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 'OK' )
+		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 1 )
 			->with( $this->equalTo( array( 'test' ) ) );
 
 		$this->assertTrue( $this->object->deleteMultiple( array( 'test' ) ) );
@@ -73,7 +73,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$this->mock->expects( $this->once() )->method( 'execute' )
 			->willReturn( array( 'tag:1' => array( 'key:1', 'key:2' ) ) );
 
-		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 'OK' )
+		$this->mock->expects( $this->once() )->method( 'del' )->willReturn( 4 )
 			->with( $this->equalTo( array( 'key:1', 'key:2', 'tag:tag1', 'tag:tag2' ) ) );
 
 		$this->assertTrue( $this->object->deleteByTags( array( 'tag1', 'tag2' ) ) );
