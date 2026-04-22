@@ -10,6 +10,22 @@
 namespace Aimeos\Base\Cache;
 
 
+abstract class PredisClientStub extends \Predis\Client
+{
+	abstract public function del( $keys );
+	abstract public function execute();
+	abstract public function exists( ...$keys );
+	abstract public function expireat( $key, $timestamp );
+	abstract public function flushdb();
+	abstract public function get( $key );
+	abstract public function mget( $keys );
+	abstract public function mset( $values );
+	abstract public function sadd( $key, ...$members );
+	abstract public function set( $key, $value, ...$options );
+	abstract public function smembers( $key );
+}
+
+
 class RedisTest extends \PHPUnit\Framework\TestCase
 {
 	private $mock;
@@ -18,15 +34,7 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 
 	protected function setUp() : void
 	{
-		$methods = array(
-			'del', 'execute', 'exists', 'expireat', 'flushdb', 'get',
-			'mget', 'mset', 'sadd', 'set', 'smembers'
-		);
-
-		$this->mock = $this->getMockBuilder( '\\Predis\\Client' )
-			->onlyMethods( ['pipeline'] )
-			->addMethods( $methods )
-			->getMock();
+		$this->mock = $this->createMock( PredisClientStub::class );
 
 		$this->object = new \Aimeos\Base\Cache\Redis( [], $this->mock );
 	}

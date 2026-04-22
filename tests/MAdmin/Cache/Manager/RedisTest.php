@@ -90,6 +90,8 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
 			->disableOriginalConstructor()->onlyMethods( array( 'get' ) )->getMock();
 
+		$mockRedis->expects( $this->once() )->method( 'get' )->willReturn( null );
+
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->setConstructorArgs( array( $context ) )->onlyMethods( array( 'getCache' ) )->getMock();
 
@@ -126,6 +128,8 @@ class RedisTest extends \PHPUnit\Framework\TestCase
 	{
 		$mockRedis = $this->getMockBuilder( '\\Aimeos\\Base\\Cache\\Redis' )
 			->disableOriginalConstructor()->onlyMethods( array( 'deleteMultiple' ) )->getMock();
+
+		$mockRedis->expects( $this->once() )->method( 'deleteMultiple' )->willReturn( true );
 
 		$mock = $this->getMockBuilder( '\\Aimeos\\MAdmin\\Cache\\Manager\\Redis' )
 			->disableOriginalConstructor()->onlyMethods( array( 'getCache' ) )->getMock();
