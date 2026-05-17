@@ -64,9 +64,9 @@ class Redis
 	 * Removes old entries from the storage.
 	 *
 	 * @param iterable $siteids List of IDs for sites whose entries should be deleted
-	 * @return \Aimeos\MShop\Common\Manager\Iface Manager object for chaining method calls
+	 * @return static Manager object for chaining method calls
 	 */
-	public function clear( iterable $siteids ) : \Aimeos\MShop\Common\Manager\Iface
+	public function clear( iterable $siteids ) : static
 	{
 		return $this;
 	}
@@ -112,9 +112,9 @@ class Redis
 	 * Removes multiple items.
 	 *
 	 * @param \Aimeos\MShop\Common\Item\Iface[]|string[] $itemIds List of item objects or IDs of the items
-	 * @return \Aimeos\MAdmin\Cache\Manager\Iface Manager object for chaining method calls
+	 * @return static Manager object for chaining method calls
 	 */
-	public function delete( $itemIds ) : \Aimeos\MShop\Common\Manager\Iface
+	public function delete( $itemIds ) : static
 	{
 		$this->getCache()->deleteMultiple( $itemIds );
 		return $this;
@@ -145,7 +145,7 @@ class Redis
 	 *
 	 * @param \Aimeos\Base\Criteria\Iface $search Search object containing the conditions
 	 * @param string[] $ref List of domains to fetch list items and referenced items for
-	 * @param int &$total Number of items that are available in total
+	 * @type int &$total Number of items that are available in total
 	 * @return \Aimeos\Map List of cache items implementing \Aimeos\MAdmin\Cache\Item\Iface
 	 */
 	public function search( \Aimeos\Base\Criteria\Iface $search, array $ref = [], ?int &$total = null ) : \Aimeos\Map
@@ -165,7 +165,7 @@ class Redis
 	{
 		$path = 'madmin/cache/manager/submanagers';
 
-		return $this->getResourceTypeBase( 'cache', $path, [], $withsub );
+		return $this->getResourceTypeBase( 'cache', $path, [], $withsub ); // @phpstan-ignore return.type, method.notFound
 	}
 
 
